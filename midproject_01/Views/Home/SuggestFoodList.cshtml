@@ -1,0 +1,78 @@
+﻿@model List<midproject_01.Models.List>
+
+@{
+    ViewBag.Title = "SuggestFoodList";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<!-- Layout -->
+<style>
+    .tm-block{
+        padding:0;
+    }
+</style>
+<div class="" id="home">
+    <div class="container">
+        <div class="col-12 tm-block-col">
+            <label for="FoodListID" class="tm-block-title" id="dayRecord">食品清單</label>
+            @*<h2 class="tm-block-title">@ViewBag.Class</h2>*@
+            @using (Ajax.BeginForm("SuggestFoodList", "Home", new AjaxOptions { UpdateTargetId = "Foodtext" }))
+            {
+                <select class="custom-select " name="FoodClass" id="FoodListID" onchange="$(this.form).submit();">
+                    <option value="" >請選擇</option>
+                    <option value="A"@( (ViewBag.ClassID =="A") ? "selected" : "" )>穀物類</option>
+                    <option value="B"@( (ViewBag.ClassID =="B") ? "selected" : "" )>澱粉類</option>
+                    <option value="D"@( (ViewBag.ClassID =="D") ? "selected" : "" )>水果類</option>
+                    <option value="E"@( (ViewBag.ClassID =="E") ? "selected" : "" )>蔬菜類</option>
+                    <option value="F"@( (ViewBag.ClassID =="F") ? "selected" : "" )>藻類</option>
+                    <option value="G"@( (ViewBag.ClassID =="G") ? "selected" : "" )>菇類</option>
+                    <option value="H"@( (ViewBag.ClassID =="H") ? "selected" : "" )>豆類</option>
+                    <option value="I"@( (ViewBag.ClassID =="I") ? "selected" : "" )>肉類</option>
+                    <option value="J"@( (ViewBag.ClassID =="J") ? "selected" : "" )>魚貝類</option>
+                    <option value="K"@( (ViewBag.ClassID =="K") ? "selected" : "" )>蛋類</option>
+                    <option value="L"@( (ViewBag.ClassID =="L") ? "selected" : "" )>乳品類</option>
+                    <option value="M"@( (ViewBag.ClassID =="M") ? "selected" : "" )>油脂類</option>
+                    <option value="N"@( (ViewBag.ClassID =="N") ? "selected" : "" )>糖類</option>
+                    <option value="Q"@( (ViewBag.ClassID =="Q") ? "selected" : "" )>糕餅點心類</option>
+                </select>
+            }
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">食品名稱</th>
+                        <th scope="col"></th>
+                        <th scope="col">蛋白質</th>
+                        <th scope="col">碳水化合物</th>
+                        <th scope="col">脂肪</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+
+                <table class="table">
+                    <tbody id="foodTable">
+
+                        @foreach (var i in Model)
+                        {
+                            <tr>
+                                <td class="foodName">@i.FoodItem</td>
+                                <td><b class="carbon">@i.CaloriePer100</b></td>
+                                <td><b class="protein">@i.FatPer100</b></td>
+                                <td><b class="fat">@i.ProteinPer100 g</b></td>
+                                @*<td><b class="calorie">@i.FoodItem cal</b></td>*@
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Layout -->
+
+<script>
+    $(function () {
+        $('.SuggestFoodList').css('color', '#f5a623');
+    });
+</script>

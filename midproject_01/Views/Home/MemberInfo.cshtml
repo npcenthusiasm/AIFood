@@ -1,0 +1,217 @@
+﻿@model midproject_01.Models.Memberlist
+
+@{
+    ViewBag.Title = "MemberInfo";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<!-- Layout -->
+<div class="" id="home">
+    <div class="container mt-5">
+        <div class="row tm-content-row">
+            <div class="tm-block-col tm-col-account-settings">
+                <div class="tm-bg-primary-dark tm-block tm-block-settings">
+                    <h2 class="tm-block-title">修改目標</h2>
+                    <form action="" method="post" class="tm-signup-form row">
+                        <div class="form-group col-lg-6">
+                            <label for="age">年齡</label>
+                            <select id="age" class="custom-select" name="age" required>
+                                <option value="">請選擇</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                                <label for="gender">性別</label>
+                                <select id="gender" class="custom-select" name="Gender" required>
+                                    <option value="" >請選擇</option>
+                                    <option value="male"  @( (Model.Gender =="male") ? "selected" : "" ) >男性</option>
+                                    <option value="female" @( (Model.Gender =="female") ? "selected" : "" ) >女性</option>
+                                </select>
+                            </div>
+                        <div class="form-group col-lg-6">
+                            <label for="height">身高</label>
+                            <select id="height" class="custom-select" name="height" placeholder="cm" required>
+                                <option value="">請選擇</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="weight">體重</label>
+                            <select id="weight" class="custom-select" name="weight" placeholder="kg" required>
+                                <option value="">請選擇</option>
+                            </select>
+
+                        </div>
+                        <input id="Goalcal"
+                               name="SuitableCaloriePerDay"
+                               type="text"
+                               style="display:none" />
+                        <div class="form-group col-lg-6">
+                            <label for="goal">目標</label>
+                            <select id="goal" class="custom-select" name="Goal" required>
+                                <option value="">請選擇</option>
+                                <option value="loss" @( (Model.Goal =="loss") ? "selected" : "" )>減重</option>
+                                <option value="stay" @( (Model.Goal =="stay") ? "selected" : "" )>維持</option>
+                                <option value="gain" @( (Model.Goal =="gain") ? "selected" : "" )>增肥</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="activitylevel">運動強度</label>
+                            <select id="activitylevel" class="custom-select" name="ActivityCoefficient" required>
+                                <option value="">請選擇</option>
+                                <option value="l" @( (Model.ActivityCoefficient =="l") ? "selected" : "" )>沒在運動</option>
+                                <option value="lm" @( (Model.ActivityCoefficient =="lm") ? "selected" : "" )>每週運動1-3天</option>
+                                <option value="m" @( (Model.ActivityCoefficient =="m") ? "selected" : "" )>每週運動4-5天</option>
+                                <option value="mh" @( (Model.ActivityCoefficient =="mh") ? "selected" : "" )>體力勞動者</option>
+                                <option value="h" @( (Model.ActivityCoefficient =="h") ? "selected" : "" )>職業運動員</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <button type="button" click="Calculate()" id="btnCaculate"
+                                    class="btn btn-primary btn-block text-uppercase">
+                                計算目標熱量
+                            </button>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <p id="lblResult" style="font-size: 120%; color: white;">你的基礎代謝率：</p>
+                            <p id="lblResult2" style="font-size: 120%; color: white;">每日總消耗熱量TDEE：</p>
+                            <p id="lblResult3" name="SuitableCaloriePerDay" value=goalresult style="font-size: 120%; color: white;">目標熱量：</p>
+
+                            <button type="submit"
+                                    class="btn btn-primary btn-block text-uppercase">
+                                送出修改
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Layout -->
+<script>
+    var result;
+    var goalresult;
+    var MaintenanceCalories;
+    //
+
+    function Calculate() {
+
+        var gender = document.getElementById("gender").value;
+        var weight = parseFloat(document.getElementById("weight").value);
+        var height = parseFloat(document.getElementById("height").value);
+        var age = parseFloat(document.getElementById("age").value);
+        var activitylevel = document.getElementById("activitylevel").value;
+        var goal = document.getElementById("goal").value;
+        //var MaintenanceCalories = 0;
+        if (gender == "male")
+        //English-BMR = 66 + ( 6.23 x weight in pounds ) + ( 12.7 x height in inches ) - ( 6.8 x age in year )
+        //Metric-BMR = 66 + ( 13.7 x weight in kilos ) + ( 5 x height in cm ) - ( 6.8 x age in years )
+        {
+            var val1 = 13.7 * weight;
+            var val2 = 5 * height;
+            var val3 = 6.8 * age;
+            result = 66 + val1 + val2 - val3;
+            var val4 = activitylevel;
+            var val5 = goal;
+        } else if (gender == "female")
+        //English-Women: BMR = 655 + ( 4.35 x weight in pounds ) + ( 4.7 x height in inches ) - ( 4.7 x age in years)
+        //Women: BMR = 655 + ( 9.6 x weight in kilos ) + ( 1.8 x height in cm ) - ( 4.7 x age in years )
+        {
+            var val1 = 9.6 * weight;
+            var val2 = 1.8 * height;
+            var val3 = 4.7 * age;
+            result = 655 + val1 + val2 - val3;
+            var val4 = activitylevel;
+            var val5 = goal;
+        }
+        switch (val4) {
+            case "l":
+                MaintenanceCalories = result * 1.2;
+                break;
+
+            case "lm":
+                MaintenanceCalories = result * 1.375;
+                break;
+
+            case "m":
+                MaintenanceCalories = result * 1.55;
+                break;
+
+            case "mh":
+                MaintenanceCalories = result * 1.725;
+                break;
+
+            case "h":
+                MaintenanceCalories = result * 1.9;
+                break;
+
+            default:
+                "m";
+        }
+        switch (val5) {
+            case "loss":
+                goalresult = MaintenanceCalories - 300;
+                break;
+
+            case "stay":
+                goalresult = MaintenanceCalories + 0;
+                break;
+
+            case "gain":
+                goalresult = MaintenanceCalories + 300;
+                break;
+
+        }
+
+        //alert(goalresult);
+        var roundA = Math.round(goalresult);
+        $("#Goalcal").val(roundA);
+    }
+
+    //document.write ('Your BMR is: ' + result.toFixed(2) + '. Your Maintenance Calories are: ' + MaintenanceCalories.toFixed(2));
+    document.getElementById("btnCaculate").addEventListener("click", function () {
+
+        Calculate();
+        document.getElementById('lblResult').innerHTML = '你的基礎代謝率： ' + result.toFixed(2);
+        document.getElementById('lblResult2').innerHTML = '每日總消耗熱量TDEE： ' + MaintenanceCalories.toFixed(2);
+        document.getElementById('lblResult3').innerHTML = '目標熱量： ' + goalresult.toFixed(2);
+
+    })
+</script>
+
+<script>
+    $(function () {
+        var $select = $("#age");
+        for (i = 1; i <= 100; i++) {
+
+            if (@Model.Age==i) {
+                $select.append($('<option selected="@Model.Age"></option>').val(i).html(i))
+            }
+            else {
+                $select.append($('<option></option>').val(i).html(i))
+            }
+        }
+
+        var $select = $("#height");
+        for (i = 100; i <= 250; i++) {
+
+            if (@Model.Height==i) {
+                $select.append($('<option selected="@Model.Height"></option>').val(i).html(i))
+            }
+            else {
+                $select.append($('<option></option>').val(i).html(i))
+            }
+        }
+
+        var $select = $("#weight");
+        for (i = 0; i <= 200; i++) {
+            if (@Model.Weight==i) {
+                $select.append($('<option selected="@Model.Weight"></option>').val(i).html(i))
+            }
+            else {
+                $select.append($('<option></option>').val(i).html(i))
+            }
+        }
+
+    });
+</script>

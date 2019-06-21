@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Setting";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<!-- Layout -->
+<div class="" id="home">
+    <div class="col-12 mx-auto tm-login-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+            <div class="col-12 text-center">
+                <h2 class="tm-block-title mb-4">我的帳號</h2>
+            </div>
+            <div class="col-12 text-center">
+                <div class="form-group mt-4">
+                    <a class="mt-5 btn btn-primary btn-block " href="@Url.Action("AccountsInfo", "Home") ">
+                        修改帳號資料
+                    </a>
+                    <a class="mt-5 btn btn-primary btn-block " href="@Url.Action("MemberInfo", "Home") ">
+                        修改會員目標
+                    </a>
+                    <a class="mt-5 btn btn-primary btn-block " href="#DelectAccount ">
+                        刪除帳號
+                    </a>
+                    <a class="mt-5 btn btn-primary btn-block " href="@Url.Action("Logout", "Home")">
+                        登出
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 mx-auto tm-login-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+            <div class="col-12 text-center">
+                <h2 class="tm-block-title mb-4">設定</h2>
+            </div>
+            <div class="col-12 text-center">
+                <div class="form-group mt-4">
+                    <a class="mt-5 btn btn-primary btn-block " href="#Recordset ">
+                        紀錄設定
+                    </a>
+                    <a class="mt-5 btn btn-primary btn-block " href="#Remine ">
+                        提醒
+                    </a>
+                    <a class="mt-5 btn btn-primary btn-block " href="#Aboutus ">
+                        關於我們
+                    </a>
+                    <a class="mt-5 btn btn-primary btn-block " href="@Url.Action("Introduction", "Home") ">
+                        說明
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Layout -->
+
+<script>
+    $(function () {
+        $('.Setting').css('color', '#f5a623');
+    });
+</script>
+
+<script>
+       //$("#FoodListID").change(function () {
+       //    $.ajax({
+       //        type: "POST",
+       //        url: "/Home/SuggestFoodList",
+       //        data: $("#FoodListID").("option:selected").val()
+       //        ,
+       //        success: function (data) {
+       //            alert("123");
+       //        }
+       //    });
+       //});
+</script>
+

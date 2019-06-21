@@ -1,0 +1,56 @@
+﻿<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=big5">
+    <meta charset="utf-8"/>
+    <title>上傳</title>
+</head>
+<body>
+    <form action="" method="POST" name="FileForm" enctype="multipart/form-data">
+        <div align="center">
+            圖片:
+            <input type="file" name="file1" size="20" id="file1" />
+            <input type="button" value="確定上傳" onclick="checkFile()" />
+        </div>
+    </form>
+
+    <script src="http://code.jquery.com/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <script language="JavaScript" type="text/javascript">
+        var fileSize = 0; //檔案大小
+        var SizeLimit = 1024000;  //上傳上限，單位:byte
+
+        function checkFile() {
+            var f = document.getElementById("file1");
+            //FOR IE
+            if ($.browser.msie) {
+                var img = new Image();
+                img.onload = checkSize;
+                img.src = f.value;
+            }
+            //FOR Firefox,Chrome
+            else {
+                fileSize = f.files.item(0).size;
+                checkSize();
+            }
+        }
+
+        //檢查檔案大小
+        function checkSize() {
+            //FOR IE FIX
+            if ($.browser.msie) {
+                fileSize = this.fileSize;
+            }
+
+            if (fileSize > SizeLimit) {
+                Message((fileSize / 1024).toPrecision(4), (SizeLimit / 1024).toPrecision(2));
+            } else {
+                document.FileForm.submit();
+            }
+        }
+
+        function Message(file, limit) {
+            var msg = "您所選擇的檔案大小為 " + file + " kB\n已超過上傳上限 " + limit + " kB\n不允許上傳！"
+            alert(msg);
+        }
+    </script>
+</body>
+</html>

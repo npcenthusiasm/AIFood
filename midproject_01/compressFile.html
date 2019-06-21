@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div align="center">
+        圖片:
+        <input type="file" multiple name="file1" size="20" id="file1" />
+        <input type="button" value="確定上傳" />
+    </div>
+    <div class="img-list"></div>
+    <script src="./js/jquery-3.3.1.min.js"></script>
+    <script>
+        var maxsize =200
+        $("#file1").change(function () {
+            if (!this.files.length) return;
+            var files = Array.prototype.slice.call(this.files);
+            if (files.length > 9) {
+                alert("最多同時只可上傳9張圖片");
+                return;
+            }
+            files.forEach(function (file, i) {
+                alert("files.forEach");
+
+                //if (!/\/(?:jpegpnggif)/i.test(file.type)) return;
+                alert("jpegpnggif");
+
+                var reader = new FileReader();
+                var li = document.createElement("li");
+                li.innerHTML = '<div class="progress"><span></span></div>';
+                $(".img-list").append($(li));
+                reader.onload = function () {
+                    var result = this.result;
+                    var img = new Image();
+                    img.src = result;
+                    //如果圖片大小小於200kb，則直接上傳
+                    if (result.length <= maxsize) {
+                        $(li).css("background-image", "url(" + result + ")");
+                        img = null;
+                        upload(result, file.type, $(li));
+                        alert("如果圖片大小小於200kb，則直接上傳");
+                        return;
+                    }
+                    //    圖片載入完畢之後進行壓縮，然後上傳
+                    if (img.complete) {
+                        callback();
+                    } else {
+                        img.onload = callback;
+                    }
+                    function callback() {
+                        var data = compress(img);
+                        $(li).css("background-image", "url(" + data + ")");
+                        upload(data, file.type, $(li));
+                        img = null;
+                    }
+                };
+                reader.readAsDataURL(file);
+            })
+        });
+
+        function compress(img) {
+            var initSize = img.src.length;
+            var width = img.width;
+            var height = img.height;
+            //如果圖片大於四百萬畫素，計算壓縮比並將大小壓至400萬以下
+            var ratio;
+            if ((ratio = width * height / 4000000) > 1) {
+                ratio = Math.sqrt(ratio);
+                width /= ratio;
+                height /= ratio;
+            } else {
+                ratio = 1;
+            }
+            canvas.width = width;
+            canvas.height = height;
+            //  鋪底色
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            //如果圖片畫素大於100萬則使用瓦片繪製
+            var count;
+            if ((count = width * height / 1000000) > 1) {
+                count = (Math.sqrt(count),1); //計算要分成多少塊瓦片
+                //   計算每塊瓦片的寬和高
+                var nw = (width / count);
+                var nh = (height / count);
+                tCanvas.width = nw;
+                tCanvas.height = nh;
+                for (var i = 0; i < count; i) {
+                    for (var j = 0; j < count; j) {
+                        tctx.drawImage(img, i * nw * ratio, j * nh * ratio, nw * ratio, nh * ratio, 0, 0, nw, nh);
+                        ctx.drawImage(tCanvas, i * nw, j * nh, nw, nh);
+                    }
+                }
+            } else {
+                ctx.drawImage(img, 0, 0, width, height);
+            }
+            //進行最小壓縮
+            var ndata = canvas.toDataURL("image/jpeg", 0.1);
+            console.log("壓縮前："  + initSize);
+            console.log("壓縮後：" +  ndata.length);
+            console.log("壓縮率：" +  (100 * (initSize - ndata.length) / initSize) +  "%");
+            tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
+            return ndata;
+        }
+    </script>
+</body>
+</html>

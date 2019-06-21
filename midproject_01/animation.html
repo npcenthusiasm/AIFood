@@ -1,0 +1,331 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="./js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="./css/templatemo-style.css">
+    <link rel="stylesheet" href="./css/fontawesome.min.css" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <style>
+
+        .navbar {
+            position: relative;
+            z-index: 1000;
+            height: 80px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+        }
+
+        .navbar-fixed-top {
+            position: fixed;
+            right: 0;
+            left: 0;
+            top: 0;
+        }
+
+        .navbar-fixed-bottom {
+            position: fixed;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: 0px;
+        }
+
+        .nav-link {
+            color: #fff;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-size: 90%;
+        }
+
+            .nav-link > i {
+                margin-bottom: 10px;
+                margin-right: 0;
+                font-size: 1.5rem;
+            }
+
+        .navbar a:hover,
+        .navbar a:hover i {
+            color: #f5a623;
+        }
+
+
+        /*------------------------------------------------*/
+        body {
+            background: #8bc34a;
+            color: white;
+            text-align: center;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        h1, h2, h3, h4 {
+            margin: 0;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        h1 {
+            font-size: 3em;
+        }
+
+        .menu {
+            -webkit-filter: url("#goo");
+            filter: url("#goo");
+        }
+
+        .menu-item, .menu-open-button {
+            background: #e91e63;
+            border-radius: 100%;
+            width: 80px;
+            height: 80px;
+            margin-left: -40px;
+            position: absolute;
+            top: 20px;
+            color: white;
+            text-align: center;
+            line-height: 80px;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            transition: -webkit-transform ease-out 200ms;
+            transition: transform ease-out 200ms;
+            transition: transform ease-out 200ms, -webkit-transform ease-out 200ms;
+        }
+
+        .menu-open {
+            display: none;
+        }
+
+        .hamburger {
+            width: 25px;
+            height: 3px;
+            background: white;
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -12.5px;
+            margin-top: -1.5px;
+            transition: -webkit-transform 200ms;
+            transition: transform 200ms;
+            transition: transform 200ms, -webkit-transform 200ms;
+        }
+
+        .hamburger-1 {
+            -webkit-transform: translate3d(0, -8px, 0);
+            transform: translate3d(0, -8px, 0);
+        }
+
+        .hamburger-2 {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .hamburger-3 {
+            -webkit-transform: translate3d(0, 8px, 0);
+            transform: translate3d(0, 8px, 0);
+        }
+
+        .menu-open:checked + .menu-open-button .hamburger-1 {
+            -webkit-transform: translate3d(0, 0, 0) rotate(45deg);
+            transform: translate3d(0, 0, 0) rotate(45deg);
+        }
+
+        .menu-open:checked + .menu-open-button .hamburger-2 {
+            -webkit-transform: translate3d(0, 0, 0) scale(0.1, 1);
+            transform: translate3d(0, 0, 0) scale(0.1, 1);
+        }
+
+        .menu-open:checked + .menu-open-button .hamburger-3 {
+            -webkit-transform: translate3d(0, 0, 0) rotate(-45deg);
+            transform: translate3d(0, 0, 0) rotate(-45deg);
+        }
+
+        .menu {
+            position: absolute;
+            left: 50%;
+            margin-left: -190px;
+            padding-top: 20px;
+            padding-left: 190px;
+            width: 380px;
+            height: 250px;
+            box-sizing: border-box;
+            font-size: 20px;
+            text-align: left;
+        }
+
+        .menu-item:hover {
+            background: white;
+            color: #e91e63;
+        }
+
+        .menu-item:nth-child(3) {
+            transition-duration: 180ms;
+        }
+
+        .menu-item:nth-child(4) {
+            transition-duration: 180ms;
+        }
+
+        .menu-item:nth-child(5) {
+            transition-duration: 180ms;
+        }
+
+        .menu-item:nth-child(6) {
+            transition-duration: 180ms;
+        }
+
+        .menu-item:nth-child(7) {
+            transition-duration: 180ms;
+        }
+
+        .menu-item:nth-child(8) {
+            transition-duration: 180ms;
+        }
+
+        .menu-item:nth-child(9) {
+            transition-duration: 180ms;
+        }
+
+        .menu-open-button {
+            z-index: 2;
+            transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition-duration: 400ms;
+            -webkit-transform: scale(1.1, 1.1) translate3d(0, 0, 0);
+            transform: scale(1.1, 1.1) translate3d(0, 0, 0);
+            cursor: pointer;
+        }
+
+            .menu-open-button:hover {
+                -webkit-transform: scale(1.2, 1.2) translate3d(0, 0, 0);
+                transform: scale(1.2, 1.2) translate3d(0, 0, 0);
+            }
+
+        .menu-open:checked + .menu-open-button {
+            transition-timing-function: linear;
+            transition-duration: 200ms;
+            -webkit-transform: scale(0.8, 0.8) translate3d(0, 0, 0);
+            transform: scale(0.8, 0.8) translate3d(0, 0, 0);
+        }
+
+        .menu-open:checked ~ .menu-item {
+            transition-timing-function: cubic-bezier(0.935, 0, 0.34, 1.33);
+        }
+
+            .menu-open:checked ~ .menu-item:nth-child(3) {
+                transition-duration: 180ms;
+                -webkit-transform: translate3d(0.08361px, -104.99997px, 0);
+                transform: translate3d(0.08361px, -104.99997px, 0);
+            }
+
+            .menu-open:checked ~ .menu-item:nth-child(4) {
+                transition-duration: 280ms;
+                -webkit-transform: translate3d(90.9466px, -52.47586px, 0);
+                transform: translate3d(90.9466px, -52.47586px, 0);
+            }
+
+            .menu-open:checked ~ .menu-item:nth-child(5) {
+                transition-duration: 380ms;
+                -webkit-transform: translate3d(90.9466px, 52.47586px, 0);
+                transform: translate3d(90.9466px, 52.47586px, 0);
+            }
+
+            .menu-open:checked ~ .menu-item:nth-child(6) {
+                transition-duration: 480ms;
+                -webkit-transform: translate3d(0.08361px, 104.99997px, 0);
+                transform: translate3d(0.08361px, 104.99997px, 0);
+            }
+
+            .menu-open:checked ~ .menu-item:nth-child(7) {
+                transition-duration: 580ms;
+                -webkit-transform: translate3d(-90.86291px, 52.62064px, 0);
+                transform: translate3d(-90.86291px, 52.62064px, 0);
+            }
+
+            .menu-open:checked ~ .menu-item:nth-child(8) {
+                transition-duration: 680ms;
+                -webkit-transform: translate3d(-91.03006px, -52.33095px, 0);
+                transform: translate3d(-91.03006px, -52.33095px, 0);
+            }
+
+            .menu-open:checked ~ .menu-item:nth-child(9) {
+                transition-duration: 780ms;
+                -webkit-transform: translate3d(-0.25084px, -104.9997px, 0);
+                transform: translate3d(-0.25084px, -104.9997px, 0);
+            }
+    </style>
+</head>
+<body>
+    <h1>Gooey Menu</h1>
+    <h2>Using CSS and SVG Filters</h2>
+    <h3>By <a href="https://codepen.io/lbebber">Lucas Bebber</a></h3>
+    <h4><a href="https://codepen.io/lbebber/pen/LELBEo" target="_blank">Version 1</a> - Version 2 - <a href="https://codepen.io/lbebber/pen/pvwZJp" target="_blank">Version 3</a> - <a href="https://codepen.io/lbebber/pen/rawQKR" target="_blank">Version 4</a></h4>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <nav class="menu">
+        <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
+        <label class="menu-open-button" for="menu-open">
+            <span class="hamburger hamburger-1"></span>
+            <span class="hamburger hamburger-2"></span>
+            <span class="hamburger hamburger-3"></span>
+        </label>
+
+        <a href="#" class="menu-item"> <i class="fa fa-bar-chart"></i> </a>
+        <a href="#" class="menu-item"> <i class="fa fa-plus"></i> </a>
+        <a href="#" class="menu-item"> <i class="fa fa-heart"></i> </a>
+        <a href="#" class="menu-item"> <i class="fa fa-envelope"></i> </a>
+        <a href="#" class="menu-item"> <i class="fa fa-cog"></i> </a>
+        <a href="#" class="menu-item"> <i class="fa fa-ellipsis-h"></i> </a>
+
+    </nav>
+
+    <nav class="navbar navbar-expand-xl navbar-fixed-bottom">
+        <div class="container h-100">
+            <a class="nav-link" href="">
+                <i class="far fa-file-alt"></i>
+                每日紀錄
+                <span class="sr-only">(current)</span>
+            </a>
+            <a class="nav-link"  href="">
+                <i class="fas fa-tachometer-alt"></i> 進展
+                <span class="sr-only">(current)</span>
+            </a>
+            <a class="nav-link" href="">
+                <i class="far fa-file-alt"></i>
+                建議飲食
+            </a>
+            <a class="nav-link"  href="">
+                <i class="fas fa-cog"></i>
+                設定
+            </a>
+        </div>
+    </nav>
+
+    <!-- filters -->
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <defs>
+            <filter id="shadowed-goo">
+
+                <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10" />
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+                <feGaussianBlur in="goo" stdDeviation="3" result="shadow" />
+                <feColorMatrix in="shadow" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 -0.2" result="shadow" />
+                <feOffset in="shadow" dx="1" dy="1" result="shadow" />
+                <feComposite in2="shadow" in="goo" result="goo" />
+                <feComposite in2="goo" in="SourceGraphic" result="mix" />
+            </filter>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10" />
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+                <feComposite in2="goo" in="SourceGraphic" result="mix" />
+            </filter>
+        </defs>
+    </svg>
+</body>
+</html>

@@ -1,0 +1,316 @@
+﻿
+@{
+    ViewBag.Title = "UploadImgVer2";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<script>
+
+    document.addEventListener(
+        "deviceready",
+        function () {
+
+            btnURL.addEventListener("click", function () {
+                var options = {
+                    quality: 50,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+                };
+                navigator.camera.getPicture(function (imageData) {
+                    img.src = "data:image/jpeg;base64," + imageData;
+                }, function () { }, options);
+            })
+
+            btnURI.addEventListener("click", function () {
+                var options = {
+                    quality: 50,
+                    destinationType: Camera.DestinationType.FILE_URI,
+                    //sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM
+                    //sourceType: 0
+                    sourceType: Camera.PictureSourceType.CAMERA
+
+                };
+                navigator.camera.getPicture(function (imageData) {
+                    console.log(imageData);
+                    img.src = imageData;
+                }, function () { }, options);
+            })
+
+        }, // end of deviceready
+        false
+    );
+
+</script>
+<!-- Layout -->
+<div class="" id="home">
+    <div class="container mt-5">
+        <div class="row tm-content-row">
+            <div class="tm-block-col tm-col-avatar">
+                <div class="tm-bg-primary-dark tm-block tm-block-avatar">
+                    <h2 class="tm-block-title">食物辨識</h2>
+                    <div class="tm-avatar-container">
+                        <div id="preview_box"></div>
+                        <a href="#" class="tm-avatar-delete-link" id="deleteImg">
+                            <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                        </a>
+                    </div>
+                    <label class="btn btn-primary btn-block text-uppercase">
+                        <input type="file" style="display:none" multiple id="UploadImg" name="imgfile" />
+                        <i class="fa fa-photo"></i><span>上傳照片</span>
+                    </label>
+                    <button onclick="processImage()" class="btn btn-primary btn-block text-uppercase" id="detect">
+                        食物辨識
+                    </button>
+                </div>
+            </div>
+            <!--cordova-->
+            @*<div data-role="content">
+                <div class="ui-grid-a">
+                    <div class="ui-block-a"><input type="button" id="btnURL" value="URL" /></div>
+                    <div class="ui-block-b"><input type="button" id="btnURI" value="URI" /></div>
+                </div>
+                <img id="img" src="images/test.jpg" style="width: 100%"></img>
+            </div>*@
+            <!--cordova-->
+            @*<h1>123123</h1>
+            <input type="file" accept="image/*" capture="capture" />*@
+            @*<image id="img" src="images/test.jpg" style="width: 100%"></image>*@
+            <div class="tm-block-col tm-col-account-settings">
+                <div class="tm-bg-primary-dark tm-block tm-block-settings">
+                    <h2 class="tm-block-title">熱量資訊</h2>
+                    <form action="" method="post" class="tm-signup-form row">
+                        <!--把回傳的食物英文名稱不顯示 display:none-->
+                        <input id="foodName"
+                               name="FoodName"
+                               style="display:none" />
+
+                        <div class="form-group col-lg-6">
+                            <label for="foodCName">食物名稱</label>
+                            <input id="foodCName"
+                                   name="FoodCName"
+                                   type="text"
+                                   class="form-control validate" />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="calorie">卡路里</label>
+                            <input id="calorie"
+                                   name="AdjCalorie"
+                                   type="text"
+                                   class="form-control validate" />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="carbohydrate">碳水化合物</label>
+                            <input id="carbohydrate"
+                                   name="AdjCarbohydrate"
+                                   type="text"
+                                   class="form-control validate" />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="fat">脂肪</label>
+                            <input id="fat"
+                                   name="AdjFat"
+                                   type="text"
+                                   class="form-control validate" />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="protein">蛋白質</label>
+                            <input id="protein"
+                                   name="AdjProtein"
+                                   type="text"
+                                   class="form-control validate" />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="tm-hide-sm">&nbsp;</label>
+                            <!-- <button type="submit"
+                            class="btn btn-primary btn-block text-uppercase">
+                        分量
+                    </button>-->
+                            <input id="quantity"
+                                   name="Quantity"
+                                   value="1"
+                                   style="display:none" />
+                            <button type="button" class="btn btn-primary btn-block text-uppercase" data-toggle="modal" data-target="#exampleModal">
+                                選擇份量
+                            </button>
+
+                        </div>
+                        <!-- Button -->
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">輸入份量</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <button type="button" class="btn btn-primary sizefood" value="1" data-dismiss="modal">1份</button>
+                                        <button type="button" class="btn btn-primary sizefood" value="2" data-dismiss="modal">2份</button>
+                                        <button type="button" class="btn btn-primary sizefood" value="3" data-dismiss="modal">3份</button>
+                                        <button type="button" class="btn btn-primary sizefood" value="4" data-dismiss="modal">4份</button>
+                                        <button type="button" class="btn btn-primary sizefood" value="5" data-dismiss="modal">5份</button>
+                                        <button type="button" class="btn btn-primary sizefood" value="6" data-dismiss="modal">6份</button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <!-- <button type="button" class="btn btn-primary">Save changes</button>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Button -->
+                        <div class="col-12">
+                            <button type="submit"
+                                    class="btn btn-primary btn-block text-uppercase">
+                                新增到熱量日記
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.UploadImgVer2').css('color', '#f5a623');
+    });
+</script>
+<!--cordova-->
+
+
+<script type="text/javascript">
+    var imgdata;
+    var calorie, carbohydrate, fat, protein;
+    //依據辨識出來的熱量結果 做分量的計算
+    $(".sizefood").click(function () {
+        if (calorie != null) {
+            var order = $(this).val();
+            $("#calorie").val(calorie * order);
+            $("#carbohydrate").val(carbohydrate * order);
+            $("#fat").val(fat * order);
+            $("#protein").val(protein * order);
+        }
+
+    });
+
+    $("#UploadImg").change(function () {
+        $("#detect").text("食物辨識");
+    });
+    //$("#deleteImg").click(function () {
+    //    $("#target").attr("src", "");
+    //});
+
+    var uriBase = "https://southeastasia.api.cognitive.microsoft.com/customvision/v3.0/Prediction/e817045b-56a3-45ee-ab88-b9c43d15943e/classify/iterations/Iteration90610/image";
+    var PredictionKey = "49f541141b484823bec1b51adf5e16df";
+    //
+    $("#UploadImg").on("change", function (e) {
+
+        $("#detect").text("辨識中.....");
+        $("#foodName").val("");    //食物名稱    清空
+        $("#foodCName").val("");    //食物名稱    清空
+        $("#calorie").val("");     //卡路里      清空
+        $("#carbohydrate").val("");//碳水化合物  清空
+        $("#fat").val("");         //脂肪        清空
+        $("#protein").val("");     //蛋白質      清空
+
+
+        var file = e.target.files[0]; //获取图片资源
+        var filename = file.name;
+        // 只选择图片文件
+        if (!file.type.match('image.*')) {
+            return false;
+        }
+        // LocalResizeIMG处理：
+        lrz(file, { width: 400 })
+            .then(function (rst) {
+                //console.log(rst.formData);
+                var img = new Image();
+                img.src = rst.base64;
+                img.onload = function () {
+                    $("#preview_box").empty().append(img);
+                    $("img").attr("class", "tm-avatar img-fluid mb-4")
+                };
+                $.ajax({
+                    url: uriBase,
+                    beforeSend: function (xhrObj) {
+                        // Request headers
+                        xhrObj.setRequestHeader("Prediction-key", PredictionKey);
+                    },
+                    type: "POST",
+                    // Request body
+                    data: rst.formData,
+                    processData: false,
+                    contentType: false
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        //console.log(JSON.stringify(data));
+                        //console.log(data);
+                        //console.log(data.predictions[0].tagName);
+                        // 图片预览
+                        //var img = new Image();
+                        //img.src = rst.base64;
+                        //img.onload = function () {
+                        //    $("#preview_box").empty().append(img);
+                        //};
+
+                        var tagName = data.predictions[0].tagName;
+                        var probability = data.predictions[0].probability;
+                        var arr = tagName.split(',');
+
+                        if (probability > 0.3) {           //辨識率大於0.0001  ---------------->可自行調整
+                            $("#detect").text("辨識成功 辨識率: " + probability);
+                            $("#foodName").val(arr[0]);    //食物英文文名稱
+                            $("#foodCName").val(arr[1]);    //食物中文名稱
+
+                            $("#calorie").val(arr[2]);     //卡路里
+                            calorie = arr[2];
+                            $("#carbohydrate").val(arr[3]);//碳水化合物
+                            carbohydrate = arr[3];
+                            $("#fat").val(arr[4]);         //脂肪
+                            fat = arr[4];
+                            $("#protein").val(arr[5]);     //蛋白質
+                            protein = arr[5];
+                            //console.log(arr);
+                        }
+                        else {
+                            $("#detect").text("辨識不出來，請重新上傳照片");
+                        }
+                    })
+                    .fail(function () {
+                        alert("伺服器忙碌中");
+                    });
+
+                return rst;
+            })
+            .catch(function (err) {
+                // 万一出错了，这里可以捕捉到错误信息
+                // 而且以上的then都不会执行
+                alert('掛了:' + err);
+            })
+            .always(function () {
+                // 不管是成功失败，这里都会执行
+            });
+    });
+
+    function processImage() {
+        //防呆裝置，沒上傳圖片按辨識則return
+        var targetSrc = $("#target").attr("src");
+        if (targetSrc.length == 0) {
+            return;
+        }
+
+
+        $("#detect").text("辨識中.....");
+        $("#foodName").val("");    //食物名稱    清空
+        $("#foodCName").val("");    //食物名稱    清空
+        $("#calorie").val("");     //卡路里      清空
+        $("#carbohydrate").val("");//碳水化合物  清空
+        $("#fat").val("");         //脂肪        清空
+        $("#protein").val("");     //蛋白質      清空
+        //console.log(imgdata);
+    };
+</script>
+

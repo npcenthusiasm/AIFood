@@ -43,7 +43,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -88,19 +96,275 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="123123.html" />
+    <Content Include="animation.html" />
+    <Content Include="backstage\accounts.html" />
+    <Content Include="backstage\add-product.html" />
+    <Content Include="canvas.html" />
+    <Content Include="checkFile.html" />
+    <Content Include="compressFile.html" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\fontawesome.min.css" />
+    <Content Include="css\templatemo-style.css" />
+    <Content Include="backstage\edit-product.html" />
+    <Content Include="FIXTOP.html" />
+    <Content Include="fog.html" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="img\1.jpg" />
+    <Content Include="img\2.jpg" />
+    <Content Include="img\3.jpg" />
+    <Content Include="img\4.jpg" />
+    <Content Include="img\arrow-down.png" />
+    <Content Include="img\avatar.png" />
+    <Content Include="img\back.jpg" />
+    <Content Include="img\check-mark.png" />
+    <Content Include="img\icon.ico" />
+    <Content Include="img\introImg1.png" />
+    <Content Include="img\notification-01.jpg" />
+    <Content Include="img\notification-02.jpg" />
+    <Content Include="img\notification-03.jpg" />
+    <Content Include="img\product-image.jpg" />
+    <Content Include="backstage\index.html" />
+    <Content Include="img\test1.png" />
+    <Content Include="img\預覽_190617_0001.jpg" />
+    <Content Include="img\預覽_190617_0002.jpg" />
+    <Content Include="img\預覽_190617_0003.jpg" />
+    <Content Include="improess.html" />
+    <Content Include="index.html" />
+    <Content Include="jquery-ui-datepicker\AUTHORS.txt" />
+    <Content Include="jquery-ui-datepicker\external\jquery\jquery.js" />
+    <Content Include="jquery-ui-datepicker\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="jquery-ui-datepicker\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="jquery-ui-datepicker\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="jquery-ui-datepicker\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="jquery-ui-datepicker\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="jquery-ui-datepicker\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="jquery-ui-datepicker\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="jquery-ui-datepicker\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="jquery-ui-datepicker\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="jquery-ui-datepicker\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="jquery-ui-datepicker\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="jquery-ui-datepicker\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="jquery-ui-datepicker\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="jquery-ui-datepicker\index.html" />
+    <Content Include="jquery-ui-datepicker\jquery-ui.css" />
+    <Content Include="jquery-ui-datepicker\jquery-ui.js" />
+    <Content Include="jquery-ui-datepicker\jquery-ui.min.css" />
+    <Content Include="jquery-ui-datepicker\jquery-ui.min.js" />
+    <Content Include="jquery-ui-datepicker\jquery-ui.structure.css" />
+    <Content Include="jquery-ui-datepicker\jquery-ui.structure.min.css" />
+    <Content Include="jquery-ui-datepicker\jquery-ui.theme.css" />
+    <Content Include="jquery-ui-datepicker\jquery-ui.theme.min.css" />
+    <Content Include="jquery-ui-datepicker\LICENSE.txt" />
+    <Content Include="ggyy.html" />
+    <Content Include="js\anime.min.js" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\Chart.min.js" />
+    <Content Include="js\jquery-3.3.1.min.js" />
+    <Content Include="js\lrz.all.bundle.js" />
+    <Content Include="js\moment.min.js" />
+    <Content Include="js\tooplate-scripts.js" />
+    <Content Include="backstage\login.html" />
+    <Content Include="backstage\products.html" />
+    <Content Include="Models\AzureCal0617.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AzureCal0617.edmx</DependentUpon>
+      <LastGenOutput>AzureCal0617.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\AzureCal0617.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AzureCal0617.edmx</DependentUpon>
+      <LastGenOutput>AzureCal0617.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\AzureCalDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AzureCalDB.edmx</DependentUpon>
+      <LastGenOutput>AzureCalDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\AzureCalDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AzureCalDB.edmx</DependentUpon>
+      <LastGenOutput>AzureCalDB.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CalDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CalDB.edmx</DependentUpon>
+      <LastGenOutput>CalDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CalDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CalDB.edmx</DependentUpon>
+      <LastGenOutput>CalDB.cs</LastGenOutput>
+    </Content>
+    <Content Include="Month.html" />
+    <Content Include="PR.html" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="texyr1.html" />
+    <Content Include="webfonts\no0617.html" />
+    <EntityDeploy Include="Models\CalDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CalDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CalDB.edmx.diagram">
+      <DependentUpon>CalDB.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\AzureCalDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AzureCalDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\AzureCalDB.edmx.diagram">
+      <DependentUpon>AzureCalDB.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\AzureCal0617.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AzureCal0617.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\AzureCal0617.edmx.diagram">
+      <DependentUpon>AzureCal0617.edmx</DependentUpon>
+    </Content>
+    <None Include="Properties\PublishProfiles\iFood0611 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\yuan0615Azure - Web Deploy.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="src\jquery.gauge.js" />
+    <Content Include="test.html" />
+    <Content Include="webfonts\fa-brands-400.svg" />
+    <Content Include="webfonts\fa-regular-400.svg" />
+    <Content Include="webfonts\fa-solid-900.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Home\Accounts.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AzureCal0617.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AzureCal0617.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AzureCal0617.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AzureCal0617.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AzureCal0617.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AzureCal0617.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AzureCalDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AzureCalDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AzureCalDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AzureCalDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AzureCalDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AzureCalDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CalDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CalDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CalDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CalDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CalDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CalDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Calorie.cs">
+      <DependentUpon>AzureCal0617.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CalorieList.cs">
+      <DependentUpon>AzureCal0617.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CarbohydrateList.cs">
+      <DependentUpon>AzureCal0617.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GoodCar.cs">
+      <DependentUpon>AzureCal0617.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HighProtein.cs">
+      <DependentUpon>AzureCal0617.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\List.cs">
+      <DependentUpon>AzureCal0617.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Memberlist.cs">
+      <DependentUpon>AzureCal0617.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PersonCal.cs">
+      <DependentUpon>AzureCal0617.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Personrecord.cs">
+      <DependentUpon>AzureCal0617.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProteinList.cs">
+      <DependentUpon>AzureCal0617.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SportCoe.cs">
+      <DependentUpon>AzureCal0617.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
+    <Content Include="jquery-ui-datepicker\package.json" />
+    <Content Include="webfonts\fa-brands-400.eot" />
+    <Content Include="webfonts\fa-brands-400.ttf" />
+    <Content Include="webfonts\fa-brands-400.woff" />
+    <Content Include="webfonts\fa-brands-400.woff2" />
+    <Content Include="webfonts\fa-regular-400.eot" />
+    <Content Include="webfonts\fa-regular-400.ttf" />
+    <Content Include="webfonts\fa-regular-400.woff" />
+    <Content Include="webfonts\fa-regular-400.woff2" />
+    <Content Include="webfonts\fa-solid-900.eot" />
+    <Content Include="webfonts\fa-solid-900.ttf" />
+    <Content Include="webfonts\fa-solid-900.woff" />
+    <Content Include="webfonts\fa-solid-900.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\_LayoutPage1.cshtml" />
+    <Content Include="Views\Create.cshtml" />
+    <Content Include="Views\Error.cshtml" />
+    <Content Include="Views\Home\MemberInfo.cshtml" />
+    <Content Include="Views\Home\UploadImgVer2.cshtml" />
+    <Content Include="Views\Home\AccountsGoalAdd.cshtml" />
+    <Content Include="Views\Home\Setting.cshtml" />
+    <Content Include="Views\Home\progress.cshtml" />
+    <Content Include="Views\Home\SuggestFoodList.cshtml" />
+    <Content Include="Views\Home\AccountsInfo.cshtml" />
+    <Content Include="Views\Home\WaitPage.cshtml" />
+    <Content Include="Views\Home\Introduction.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -110,8 +374,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

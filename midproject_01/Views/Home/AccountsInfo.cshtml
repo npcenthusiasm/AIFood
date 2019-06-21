@@ -1,0 +1,68 @@
+﻿@model midproject_01.Models.Memberlist
+@{
+    ViewBag.Title = "AccountsInfo";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+
+    <div class="" id="home">
+    
+        <div class="container mt-5">
+            
+            <div class="row tm-content-row">
+                
+                <div class="tm-block-col tm-col-account-settings">
+                    <div class="tm-bg-primary-dark tm-block tm-block-settings">
+                        <h2 class="tm-block-title">修改會員資料</h2>
+                        <form action="" method="post" class="tm-signup-form row">
+
+                            <div class="form-group col-lg-6">
+                                <label for="name">姓名</label>
+                                <input id="name"
+                                       name="Username"
+                                       type="text"
+                                       class="form-control validate" value="@Model.UserName" />
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="email">信箱</label>
+                                <input id="email"
+                                       name="Email"
+                                       type="email"
+                                       class="form-control validate" value="@Model.Email" />
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="OldPassword">舊密碼</label>
+                                <input id="OldPassword"
+                                       name="OldPassword"
+                                       type="password"
+                                       class="form-control validate" />
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="password">新密碼</label>
+                                <input id="password"
+                                       name="Password"
+                                       type="password"
+                                       class="form-control validate" />
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="password2">再次輸入新密碼</label>
+                                <input id="password2"
+                                       name="password2"
+                                       type="password"
+                                       class="form-control validate" />
+                            </div>
+                            <div class="form-group col-lg-6">
+
+                                <button type="submit"
+                                        class="btn btn-primary btn-block text-uppercase">
+                                    送出修改
+                                </button>
+                            </div>
+                        </form>
+                        <h2 class="tm-block-title"><a href="#">忘記密碼?</a></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>

@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Introduction</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.15/jquery.bxslider.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/templatemo-style.css">
+    @*<link rel="stylesheet" href="~/css/bootstrap.min.css" />*@
+    <style>
+        .bx-wrapper .bx-controls-direction {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="tm-bg-primary-dark tm-block tm-block-avatar">
+        <div class="bxslider">
+            <div><img src="~/img/預覽_190617_0001.jpg"></div>
+            <div><img src="~/img/預覽_190617_0002.jpg"></div>
+            <div><img id="final" src="~/img/預覽_190617_0003.jpg"></div>
+        </div>       <!-- Slideshow end -->
+        <button id="Iknow" class="btn btn-primary btn-block text-uppercase">
+            前往首頁
+        </button>
+    </div>
+
+    <script>
+        $('.bxslider').bxSlider({
+            auto: false,
+            autoControls: true,
+            stopAutoOnClick: true,
+            pager: true,
+            slideWidth: 600
+        });
+
+          @*window.setTimeout(function () {
+
+            // Move to a new location or you can do something else
+            window.location.href = "@Url.Action("index", "Home")";
+
+        }, 15000);*@
+        @*$("#final").click(function (){
+            window.location.href = "@Url.Action("index", "Home")";
+        });*@
+        $("#Iknow").click(function () {
+            window.location.href = "@Url.Action("index", "Home")";
+        });
+    </script>
+</body>
+</html>

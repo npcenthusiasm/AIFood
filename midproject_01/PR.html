@@ -1,0 +1,301 @@
+﻿@model List<midproject_01.Models.Personrecord>
+    @{
+    ViewBag.Title = "progress";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+    }
+    @*http://localhost:54469/*@
+    <!DOCTYPE html>
+    <html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Product Admin - Dashboard HTML Template</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
+        <!-- https://fonts.google.com/specimen/Roboto -->
+        <link rel="stylesheet" href="~/css/fontawesome.min.css">
+        <!-- https://fontawesome.com/ -->
+        <link rel="stylesheet" href="~/css/bootstrap.min.css">
+        <!-- https://getbootstrap.com/ -->
+        <link rel="stylesheet" href="~/css/templatemo-style.css">
+        <!--
+        Product Admin CSS Template
+        https://templatemo.com/tm-524-product-admin
+        -->
+    </head>
+    <body id="reportsPage">
+        <div class="" id="home">
+            <nav class="navbar navbar-expand-xl">
+                <div class="container h-100">
+                    <a class="navbar-brand" href="@Url.Action(" index", "Home" )">
+                        <h1 class="tm-site-title mb-0">回首頁</h1>
+                    </a>
+                    <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-bars tm-nav-icon"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mx-auto h-100">
+
+                            <li class="nav-item">
+
+                                <a class="nav-link" href="@Url.Action(" UploadImgVer2", "Home" )">
+                                    <i class="far fa-file-alt"></i>
+                                    每日紀錄
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action(" progress", "Home" )">
+                                    <i class="fas fa-tachometer-alt"></i> 進展
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action(" MemberInfo", "Home" )">
+                                    <i class="far fa-user"></i> 會員中心
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action(" SuggestFoodList", "Home" )">
+                                    <i class="far fa-file-alt"></i> 建議飲食
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-cog"></i>
+                                    設定
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link d-block" href="@Url.Action(" Login", "Home" )">
+                                    <b>登入會員</b>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </nav>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <p class="text-white mt-5 mb-5">BMI值計算公式:    BMI = 體重(公斤) / 身高^2(公尺)</p>
+                    </div>
+                </div>
+                <!-- row -->
+                <div class="row tm-content-row">
+
+                    <div class="col-12 tm-block-col">
+                        <div class="tm-bg-primary-dark tm-block tm-block-taller">
+                            <h2 class="tm-block-title">進展:點選觀看單一類別</h2>
+                            <div id="pieChartContainer">
+                                <canvas id="lineChart" class="chartjs-render-monitor"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 tm-block-col">
+                        <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                            <h2 class="tm-block-title" id="dayRecord">紀錄清單</h2>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">月份</th>
+                                        <th scope="col">身高</th>
+                                        <th scope="col">體重</th>
+                                        <th scope="col">BMI</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td><b class="Measureday">@item.Measureday.Substring(4, 2)/@item.Measureday.Substring(6, 2)</b></td>
+                                        <th class="Height"><b>@item.Height</b></th>
+                                        <td class="Weight">@item.Weight</td>
+                                        <td><b class="bmi">@(Math.Round(Convert.ToDecimal(item.Weight / Math.Pow(Convert.ToDouble(item.Height / 100), 2)), 1))</b></td>
+
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="col-12 tm-block-col">
+                        <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                            <form class="form-horizontal" method="post">
+                                <fieldset>
+                                    <h2 class="tm-block-title" id="dayRecord">新增紀錄</h2>
+                                    <!-- Text input-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="height">身高</label>
+                                        <div class="col-md-4">
+                                            <input id="height" name="height" type="text" placeholder="168" class="form-control input-md" value="@Model.FirstOrDefault().Height">
+                                        </div>
+
+                                        <label class="col-md-4 control-label" for="weight">體重</label>
+                                        <div class="col-md-4">
+                                            <input id="weight" name="weight" type="text" placeholder="50" class="form-control input-md" value="@Model.FirstOrDefault().Weight">
+                                        </div>
+                                    </div>
+
+                                    <!-- Button -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="add"></label>
+                                        <div class="col-md-4">
+                                            <button id="add" class="btn btn-primary" type="submit">新增</button>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="tm-footer row tm-mt-small">
+                <div class="col-12 font-weight-light">
+                    <p class="text-center text-white mb-0 px-4 small">
+                        Copyright &copy; <b>2018</b> All rights reserved.
+
+                        Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+        <script src="~/js/jquery-3.3.1.min.js"></script>
+        <!-- https://jquery.com/download/ -->
+        <script src="~/js/moment.min.js"></script>
+        <!-- https://momentjs.com/ -->
+        <script src="~/js/Chart.min.js"></script>
+        <!-- http://www.chartjs.org/docs/latest/ -->
+        <script src="~/js/bootstrap.min.js"></script>
+        <!-- https://getbootstrap.com/ -->
+        <script src="~/js/tooplate-scripts.js"></script>
+        <script>
+
+
+        bmiData = [];
+        var x = document.getElementsByClassName('bmi');
+        for (var i = 0; i < x.length; i++) {
+            bmiData.push(x[i].innerHTML)
+        };
+        console.log("bmi: " + bmiData)
+
+
+        weightData = [];
+        var z = document.getElementsByClassName('Weight');
+        for (var i = 0; i < z.length; i++) {
+            weightData.push(z[i].innerHTML)
+        };
+        console.log("Weight: " + weightData)
+
+        MeasuredayData = [0];
+        var y = document.getElementsByClassName('Measureday');
+        for (var i = 0; i < y.length; i++) {
+            MeasuredayData.push(y[i].innerHTML)
+        };
+
+        console.log("MeasuredayData: " + MeasuredayData)
+
+        Chart.defaults.global.defaultFontColor = 'white';
+        let ctxLine,
+            ctxBar,
+            ctxPie,
+            optionsLine,
+            optionsBar,
+            optionsPie,
+            configLine,
+            configBar,
+            configPie,
+            lineChart;
+        //barChart,
+        //pieChart;
+
+        //        // DOM is ready
+        $(function () {
+            drawLineChart(); // Line Chart
+            //    drawBarChart(); // Bar Chart
+            //drawPieChart(); // Pie Chart
+
+            $(window).resize(function () {
+                updateLineChart();
+                //updateBarChart();
+            });
+        })
+
+        function drawLineChart() {
+            if ($("#lineChart").length) {
+                ctxLine = document.getElementById("lineChart").getContext("2d");
+                optionsLine = {
+                    scales: {
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: ''
+                            }
+                        }]
+                    }
+                };
+
+                // Set aspect ratio based on window width
+                optionsLine.maintainAspectRatio =
+                    $(window).width() < width_threshold ? false : true;
+
+                configLine = {
+                    type: "line",
+                    data: {
+                        labels: MeasuredayData,
+                        datasets: [{
+                            label: "BMI",
+                            data: bmiData,
+                            fill: false,
+                            borderColor: "rgb(75, 192, 192)",
+                            cubicInterpolationMode: "monotone",
+                            pointRadius: 2,
+                            fill: true,
+
+                        },
+                        {
+                            label: "體重",
+                            data: weightData,
+                            fill: false,
+                            borderColor: "rgba(255,99,132,1)",
+                            cubicInterpolationMode: "monotone",
+                            pointRadius: 5,
+                        },
+
+                        ]
+                    },
+                    options: optionsLine
+                };
+
+                lineChart = new Chart(ctxLine, configLine);
+            }
+        };
+
+        var bmi = $('.bmi').html();
+        console.log(bmi);
+        if (bmi > 24) {
+            $('.bmi').attr('style', 'background-color:gray');
+            console.log('red');
+        }
+
+        //var x = document.getElementsByClassName('bmi');
+        for (var i = 0; i < x.length; i++) {
+            var bmi = $('.bmi').html();
+            console.log(bmi);
+        };
+        //console.log("bmi: " + bmiData)
+
+
+
+        </script>
+    </body>
+</html>

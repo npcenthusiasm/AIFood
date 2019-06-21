@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>@ViewBag.Title</title>
+    <link rel="icon" href="~/img/icon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="~/img/icon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" />
+    <link rel="stylesheet" href="~/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/templatemo-style.css">
+    <!-- 半圓進度表css js -->
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="~/src/jquery.gauge.js"></script>
+    <!-- 半圓進度表css js -->
+    <link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' rel='stylesheet' />
+    <!-- 圖片大小壓縮 -->
+    <script src="~/js/lrz.all.bundle.js"></script>
+    <!-- 圖片大小壓縮 -->
+    <!-- 固定 navigationBar-->
+    <style>
+        .navbar {
+            position: relative;
+            z-index: 1000;
+            height: 80px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+        }
+
+        .navbar-fixed-top {
+            position: fixed;
+            right: 0;
+            left: 0;
+            top: 0;
+        }
+
+        .navbar-fixed-bottom {
+            position: fixed;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: 0px;
+        }
+
+        .nav-link {
+            color: #fff;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-size: 90%;
+        }
+
+            .nav-link > i {
+                margin-bottom: 10px;
+                margin-right: 0;
+                font-size: 1.5rem;
+            }
+
+        .navbar a:hover,
+        .navbar a:hover i {
+            color: #f5a623;
+        }
+    </style>
+    <!-- 固定 navigationBar-->
+
+</head>
+
+<body>
+    <pre>   </pre>
+    <pre>   </pre>
+    <pre>   </pre>
+    <!-- navigationBar top-->
+    <nav class="navbar navbar-expand-xl navbar-fixed-top">
+        <div class="container h-100">
+            <a class="navbar-brand" href="@Url.Action("index", "Home")">
+                <h1 class="tm-site-title mb-0">IFOOD</h1>
+            </a>
+        </div>
+    </nav>
+    <!-- navigationBar top-->
+    <!-- navigationBar bottom-->
+    <nav class="navbar navbar-expand-xl navbar-fixed-bottom">
+        <div class="container h-100">
+            <a class="nav-link UploadImgVer2" href="@Url.Action("UploadImgVer2", "Home")">
+                <i class="fa fa-camera"></i>
+                每日紀錄
+                <span class="sr-only">(current)</span>
+            </a>
+            <a class="nav-link progresslink" href="@Url.Action("progress", "Home")">
+                <i class="fas fa-tachometer-alt"></i> 進展
+                <span class="sr-only">(current)</span>
+            </a>
+            <a class="nav-link SuggestFoodList" href="@Url.Action("SuggestFoodList", "Home")">
+                <i class="far fa-file-alt"></i>
+                建議飲食
+            </a>
+            <a class="nav-link Setting" href="@Url.Action("Setting", "Home")">
+                <i class="fas fa-cog"></i>
+                設定
+            </a>
+            @*<a class="nav-link" href="@Url.Action("Login", "Home")">
+                    <b>登入會員</b>
+                </a>*@
+        </div>
+    </nav>
+    <!-- navigationBar bottom-->
+
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/js/moment.min.js"></script>
+    <script src="~/js/Chart.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/tooplate-scripts.js"></script>
+
+
+    <section>
+        @RenderBody()
+    </section>
+
+    @*<footer class="tm-footer row tm-mt-small">*@
+    <div class="col-12 font-weight-light">
+        <p class="text-center text-white mb-0 px-4 small">
+            Copyright &copy; <b>2018</b> All rights reserved.
+
+            Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+        </p>
+    </div>
+    @*</footer>*@
+    <pre>   </pre>
+    <pre>   </pre>
+    <pre>   </pre>
+
+    <script>
+
+
+    </script>
+</body>
+</html> 

@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>压缩上传为base64</title>
+    <script src="./js/jquery-3.3.1.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+</head>
+<body>
+    <form id="form1" name="form1" method="post" action="">
+        <input type="file" name="fileToUpload" id="fileToUpload" /> <br />
+        <input type="text" name="compressValue" id="compressValue" style="display:none;" /><br />
+        <input type="button" id='uploadBtn' value="上传" /><br />
+    </form>
+
+    <script type="text/javascript">
+    //图片上传change事件
+        $('#fileToUpload').change(function () {
+            uploadBtnChange();
+        });
+
+        //提交click事件
+        $('#uploadBtn').click(function () {
+            var preview = document.getElementById('compressValue').value;
+            if (preview) {
+                $.ajax({
+                    url: "canvas.html",
+                    type: "POST",
+                    data: { 'imgBase64': preview },
+                    dataType: 'json',
+                    success: function (json) {
+                        alert(json);
+                    },
+                    error: function () {
+                        alert('操作失败，请跟技术联系');
+                    }
+                });
+            }
+        });
+
+        function uploadBtnChange() {
+            var scope = this;
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+                //获取上传file
+                var filefield = document.getElementById('fileToUpload'),
+                    file = filefield.files[0];
+                console.log(filefield);
+                console.log(file);
+                //获取用于存放压缩后图片base64编码
+                var compressValue = document.getElementById('compressValue');
+                processfile(file, compressValue);
+            } else {
+                alert("此浏览器不完全支持压缩上传图片");
+            }
+        }
+
+        function processfile(file, compressValue) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                var blob = new Blob([event.target.result]);
+                window.URL = window.URL || window.webkitURL;
+                var blobURL = window.URL.createObjectURL(blob);
+                var image = new Image();
+                image.src = blobURL;
+                image.onload = function () {
+                    var resized = resizeMe(image);
+                    compressValue.value = resized;
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function resizeMe(img) {
+            //压缩的大小
+            var max_width = 50;
+            var max_height = 50;
+            alert("resizeMe");
+
+            var canvas = document.createElement('canvas');
+            var width = img.width;
+            var height = img.height;
+            if (width > height) {
+                if (width > max_width) {
+                    height = Math.round(height *= max_width / width);
+                    width = max_width;
+                }
+            } else {
+                if (height > max_height) {
+                    width = Math.round(width *= max_height / height);
+                    height = max_height;
+                }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+            //压缩率
+            console.log(canvas.toDataURL("image/jpeg", 0.92));
+            return canvas.toDataURL("image/jpeg", 0.92);
+        }</script>
+
+</body>
+</html>

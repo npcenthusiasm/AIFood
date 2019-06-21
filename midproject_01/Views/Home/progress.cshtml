@@ -1,0 +1,226 @@
+﻿@model List<midproject_01.Models.Personrecord>
+@{
+    ViewBag.Title = "progress";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<!-- Layout -->
+<div class="" id="home">
+
+    <div class="container">
+        @*<div class="row">
+                <div class="col">
+                    <p class="text-white mt-5 mb-5">BMI值計算公式:    BMI = 體重(公斤) / 身高^2(公尺)</p>
+                </div>
+            </div>*@
+        <h2 class="tm-block-title">BMI 值計算公式 : 體重(kg) / 身高<sup>2</sup>(m)</h2>
+        <!-- row -->
+        <div class="row tm-content-row">
+
+            <div class="col-12 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-taller">
+                    <h2 class="tm-block-title">進展:點選觀看單一類別</h2>
+                    <div id="pieChartContainer">
+                        <canvas id="lineChart" class="chartjs-render-monitor"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                    <h2 class="tm-block-title" id="dayRecord">紀錄清單</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">日期</th>
+                                <th scope="col">身高</th>
+                                <th scope="col">體重</th>
+                                <th scope="col">BMI</th>
+                                <th scope="col">刪除</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td><b class="Measureday">@item.Measureday.Substring(4, 2)/@item.Measureday.Substring(6, 2)</b></td>
+                                <th class="Height"><b>@item.Height</b></th>
+                                <td class="Weight">@item.Weight</td>
+                                <td><b class="bmi">@(Math.Round(Convert.ToDecimal(item.Weight / Math.Pow(Convert.ToDouble(item.Height / 100), 2)), 1))</b></td>
+                                <td>
+                                    <a href="/Home/ProgressDelete?id=@item.RecordID" class="close" aria-label="Close" >
+                                        <span class="glyphicon-align-center" aria-hidden="true">&times;</span>
+                                    </a>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-12 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                    <form class="form-horizontal" method="post">
+                        <fieldset>
+                            <h2 class="tm-block-title" id="dayRecord">新增紀錄</h2>
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="height">身高</label>
+                                <div class="col-md-4">
+                                    <input id="height" name="height" type="text" placeholder="168" class="form-control input-md" value="@Model.FirstOrDefault().Height">
+                                </div>
+
+                                <label class="col-md-4 control-label" for="weight">體重</label>
+                                <div class="col-md-4">
+                                    <input id="weight" name="weight" type="text" placeholder="50" class="form-control input-md" value="@Model.FirstOrDefault().Weight">
+                                </div>
+                            </div>
+
+                            <!-- Button -->
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="add"></label>
+                                <div class="col-md-4">
+                                    <button id="add" class="btn btn-primary" type="submit">新增</button>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Layout -->
+
+
+
+
+
+<script>
+
+    $(function () {
+        $('.progresslink').css('color', '#f5a623');
+    });
+
+    bmiData = [];
+    var x = document.getElementsByClassName('bmi');
+    for (var i = 0; i < x.length; i++) {
+        bmiData.push(x[i].innerHTML)
+    };
+    console.log("bmi: " + bmiData)
+
+
+    weightData = [];
+    var z = document.getElementsByClassName('Weight');
+    for (var i = 0; i < z.length; i++) {
+        weightData.push(z[i].innerHTML)
+    };
+    console.log("Weight: " + weightData)
+
+    MeasuredayData = [];
+    var y = document.getElementsByClassName('Measureday');
+    for (var i = 0; i < y.length; i++) {
+        MeasuredayData.push(y[i].innerHTML)
+    };
+
+    console.log("MeasuredayData: " + MeasuredayData)
+
+    Chart.defaults.global.defaultFontColor = 'white';
+    let ctxLine,
+        ctxBar,
+        ctxPie,
+        optionsLine,
+        optionsBar,
+        optionsPie,
+        configLine,
+        configBar,
+        configPie,
+        lineChart;
+    //barChart,
+    //pieChart;
+
+    //        // DOM is ready
+    $(function () {
+        drawLineChart(); // Line Chart
+        //    drawBarChart(); // Bar Chart
+        //drawPieChart(); // Pie Chart
+
+        $(window).resize(function () {
+            updateLineChart();
+            //updateBarChart();
+        });
+    })
+
+    function drawLineChart() {
+        if ($("#lineChart").length) {
+            ctxLine = document.getElementById("lineChart").getContext("2d");
+            optionsLine = {
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: ''
+                        }
+                    }]
+                }
+            };
+
+            // Set aspect ratio based on window width
+            optionsLine.maintainAspectRatio =
+                $(window).width() < width_threshold ? false : true;
+
+            configLine = {
+                type: "line",
+                data: {
+                    labels: MeasuredayData,
+                    datasets: [{
+                        label: "BMI",
+                        data: bmiData,
+                        fill: false,
+                        borderColor: "rgb(75, 192, 192)",
+                        cubicInterpolationMode: "monotone",
+                        pointRadius: 2,
+                        fill: true,
+
+                    },
+                    {
+                        label: "體重",
+                        data: weightData,
+                        fill: false,
+                        borderColor: "rgba(255,99,132,1)",
+                        cubicInterpolationMode: "monotone",
+                        pointRadius: 5,
+                    },
+
+                    ]
+                },
+                options: optionsLine
+            };
+
+            lineChart = new Chart(ctxLine, configLine);
+        }
+    };
+
+    var bmi = $('.bmi').html();
+    console.log(bmi);
+    if (bmi > 24) {
+        $('.bmi').attr('style', 'background-color:gray');
+        console.log('red');
+    }
+
+    //var x = document.getElementsByClassName('bmi');
+    for (var i = 0; i < x.length; i++) {
+        var bmi = $('.bmi').html();
+        console.log(bmi);
+    };
+    //console.log("bmi: " + bmiData)
+
+
+
+</script>
+
+

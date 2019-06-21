@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="js/lrz.all.bundle.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<body>
+
+    <input id="img_input" type="file" accept="image/*" />
+    <div id="preview_box"></div>
+
+    <script>
+        var uriBase = "https://southeastasia.api.cognitive.microsoft.com/customvision/v3.0/Prediction/e817045b-56a3-45ee-ab88-b9c43d15943e/classify/iterations/Iteration90610/image";
+        var PredictionKey = "49f541141b484823bec1b51adf5e16df";
+
+
+
+        $("#img_input").on("change", function (e) {
+            var file = e.target.files[0]; //获取图片资源
+            var filename = file.name;
+            // 只选择图片文件
+            if (!file.type.match('image.*')) {
+                return false;
+            }
+            // LocalResizeIMG处理：
+            lrz(file, { width: 400 })
+                .then(function (rst) {
+
+                    //$.ajax({
+                    //    url: 'upload.php',
+                    //    data: rst.formData, // LocalResizeIMG 直接封装好的
+                    //    processData: false,
+                    //    contentType: false,
+                    //    type: 'POST'
+                    //}).done(function (data, textStatus, jqXHR) {
+                    //    // 图片预览
+                    //    var img = new Image();
+                    //    img.src = rst.base64;
+                    //    img.onload = function () {
+                    //        $("#preview_box").empty().append(img);
+                    //    };
+                    //});
+                    console.log(rst.formData);
+                    $.ajax({
+                        url: uriBase,
+                        beforeSend: function (xhrObj) {
+                            // Request headers
+                            xhrObj.setRequestHeader("Prediction-key", PredictionKey);
+                        },
+                        type: "POST",
+                        // Request body
+                        data: rst.formData,
+                        processData: false,
+                        contentType: false
+                    })
+                        .done(function (data) {
+                            alert("success");
+                        })
+                        .fail(function () {
+                            alert("error");
+                        });
+
+                    return rst;
+                })
+                .catch(function (err) {
+                    // 万一出错了，这里可以捕捉到错误信息
+                    // 而且以上的then都不会执行
+                    alert('ERROR:' + err);
+                })
+                .always(function () {
+                    // 不管是成功失败，这里都会执行
+                });
+        });
+    </script>
+</body>
+</html>

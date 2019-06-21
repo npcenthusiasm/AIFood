@@ -1,0 +1,257 @@
+﻿<!-- Layout = "~/Views/_LayoutPage1.cshtml";-->
+
+@model List<midproject_01.Models.PersonCal>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+
+<!-- 導覽列移到Layout -->
+
+<div class="" id="home">
+    <div class="container">
+        <div class="row tm-content-row">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+
+                <h2 class="tm-block-title">卡路里餘額</h2>
+                <div class="container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>每日標準</th>
+                                <th>攝取熱量</th>
+                                <th>熱量餘額</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@Request.Cookies["SuitableCaloriePerDay"].Value.ToString()</td>
+                                <td id="dailyCal"></td>
+                                <td id="minusCal"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block  tm-block-taller">
+                    <h2 class="tm-block-title">本日攝取紀錄</h2>
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+            <!--                 <canvas id="barChart"></canvas>-->
+            <div class="col-12 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-taller">
+                    <h2 class="tm-block-title">營養攝取比例</h2>
+                    <div id="pieChartContainer">
+                        <canvas id="pieChart" class="chartjs-render-monitor"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                    <h2 class="tm-block-title" id="dayRecord">紀錄清單</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">日期</th>
+                                <th scope="col">食品</th>
+                                <th scope="col">碳水</th>
+                                <th scope="col">蛋白質</th>
+                                <th scope="col">脂肪</th>
+                                <th scope="col">卡路里</th>
+                                <th scope="col">刪除</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in Model)
+                            {
+                            <tr>
+                                <th scope="row"><b>@i.RecordDay.Substring(4, 2)/@i.RecordDay.Substring(6, 2)</b></th>
+                                <td class="foodName">@i.FoodCName</td>
+                                <td><b class="carbon">@i.AdjCarbohydrate g</b></td>
+                                <td><b class="protein">@i.AdjProtein g</b></td>
+                                <td><b class="fat">@i.AdjFat g</b></td>
+                                <td><b class="calorie">@i.AdjCalorie cal</b></td>
+                                <td>
+                                    <a href="/Home/IndexDelete?id=@i.PersonCalID" class="close" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </a>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+        //pieChart total count
+        var pieChartData = [];
+
+        function PieCaculate(IdName, ArrayName) {
+            var ArrayName = document.getElementsByClassName(IdName);
+            var total = 0.0
+            for (var i = 0; i < ArrayName.length; i++) {
+                total += parseFloat(ArrayName[i].innerHTML)
+            }
+            pieChartData.push(total);
+            console.log(IdName + ':' + total)
+        }
+        PieCaculate('fat', 'fatList');
+        PieCaculate('carbon', 'carbonList');
+        PieCaculate('protein', 'proteinList');
+
+        //pieChart total count end
+
+        //LineChartData
+        var dailyCal = [0];
+        var calorieList = document.getElementsByClassName('calorie')
+        var totalCal = 0.0
+        for (var i = 0; i < calorieList.length; i++) {
+         totalCal += parseFloat(calorieList[i].innerHTML)
+            dailyCal.push(totalCal)
+        }
+        console.log('totalCal:' + totalCal)
+
+        $("#dailyCal").html(totalCal);
+        $("#minusCal").html(@Request.Cookies["SuitableCaloriePerDay"].Value-totalCal);
+        //standardCount
+        var standardCal = [];
+        console.log(@Request.Cookies["SuitableCaloriePerDay"].Value.ToString());
+        for (var i = 0; i < calorieList.length + 1; i++) {
+            var SuitableCaloriePerDay =@Request.Cookies["SuitableCaloriePerDay"].Value.ToString();
+            standardCal.push(SuitableCaloriePerDay)
+            }
+
+        //LineChartData end
+
+        var foodName =[0]
+        var foodNameList = document.getElementsByClassName('foodName')
+        for (var i = 0; i < foodNameList.length; i++) {
+         foodName.push(foodNameList[i].innerHTML )
+        }
+
+     Chart.defaults.global.defaultFontColor = 'white';
+        let ctxLine,
+            ctxBar,
+            ctxPie,
+            optionsLine,
+            optionsBar,
+            optionsPie,
+            configLine,
+            configBar,
+            configPie,
+            lineChart;
+        //barChart,
+        pieChart;
+
+        //        // DOM is ready
+        $(function () {
+            drawLineChart(); // Line Chart
+            //    drawBarChart(); // Bar Chart
+            drawPieChart(); // Pie Chart
+
+            $(window).resize(function () {
+                updateLineChart();
+                //updateBarChart();
+            });
+        })
+
+        function drawLineChart() {
+            if ($("#lineChart").length) {
+                ctxLine = document.getElementById("lineChart").getContext("2d");
+                optionsLine = {
+                    scales: {
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: "cal"
+                            }
+                        }]
+                    }
+                };
+
+                // Set aspect ratio based on window width
+                optionsLine.maintainAspectRatio =
+                    $(window).width() < width_threshold ? false : true;
+
+                configLine = {
+                    type: "line",
+                    data: {
+                        labels: foodName,
+                        datasets: [{
+                            label: "每日應攝取",
+                            data: standardCal,
+                            fill: false,
+                            borderColor: "rgb(75, 192, 192)",
+                            cubicInterpolationMode: "monotone",
+                            pointRadius: 2,
+                            fill: true,
+
+                        },
+                        {
+                            label: "本日累加熱量",
+                            data: dailyCal,
+                            fill: false,
+                            borderColor: "rgba(255,99,132,1)",
+                            cubicInterpolationMode: "monotone",
+                            pointRadius: 5,
+                        },
+
+                        ]
+                    },
+                    options: optionsLine
+                };
+
+                lineChart = new Chart(ctxLine, configLine);
+            }
+        }
+
+        function drawPieChart() {
+            if ($("#pieChart").length) {
+                var chartHeight = 300;
+
+                $("#pieChartContainer").css("height", chartHeight + "px");
+
+                ctxPie = document.getElementById("pieChart").getContext("2d");
+
+                optionsPie = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 10,
+                            bottom: 10 }},
+                    legend: {position: "top"}};
+                configPie = {
+                    type: "pie",
+                    data: {
+                        datasets: [{
+                            data: pieChartData,
+                            backgroundColor: ["#F7604D", "#4ED6B8", "#A8D582"],
+                            label: "Storage",
+                        }],
+                        labels: ["脂肪","碳水化合物" ,"蛋白質"]
+                    },
+                    options: optionsPie
+                };
+                pieChart = new Chart(ctxPie, configPie);
+            }
+        }
+
+
+
+
+</script>
+

@@ -1,0 +1,306 @@
+﻿
+@{
+    ViewBag.Title = "AccountsGoalAdd";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>MemberInfo</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:400,700" />
+    <!-- https://fonts.google.com/specimen/Roboto -->
+    <link rel="stylesheet" href="~/css/fontawesome.min.css" />
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="~/css/templatemo-style.css">
+    <link rel="icon" href="~/img/icon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="~/img/icon.ico" type="image/x-icon" />
+
+
+</head>
+<body id="reportsPage">
+    <div class="" id="home">
+        <nav class="navbar navbar-expand-xl">
+            <div class="container h-100">
+                <!--a class="navbar-brand" href="~/Views/Home/Index.cshtml"-->
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                    <h1 class="tm-site-title mb-0">IFOOD</h1>
+                </a>
+                <button class="navbar-toggler ml-auto mr-0"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <i class="fas fa-bars tm-nav-icon"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto h-100">
+                        <!--
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Home")">
+                                <i class="fas fa-tachometer-alt"></i> 查詢營養素
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                            -->
+                        @*<li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle"
+                                   href="#"
+                                   id="navbarDropdown"
+                                   role="button"
+                                   data-toggle="dropdown"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">
+                                    <i class="far fa-file-alt"></i>
+                                    <span> 資料清單 <i class="fas fa-angle-down"></i> </span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">Daily Report</a>
+                                    <a class="dropdown-item" href="#">Weekly Report</a>
+                                    <a class="dropdown-item" href="#">Yearly Report</a>
+                                </div>
+                            </li>*@
+                        @*<li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Products", "Home")">
+                                    <i class="fas fa-shopping-cart"></i> Products
+                                </a>
+                            </li>*@
+                        <li class="nav-item">
+                            <a class="nav-link active" href="@Url.Action("Accounts", "Home")">
+                                <i class="far fa-user"></i> 會員註冊
+                            </a>
+                        </li>
+                        @*<li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle"
+                                   href="#"
+                                   id="navbarDropdown"
+                                   role="button"
+                                   data-toggle="dropdown"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">
+                                    <i class="fas fa-cog"></i>
+                                    <span> Settings <i class="fas fa-angle-down"></i> </span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">Profile</a>
+                                    <a class="dropdown-item" href="#">Billing</a>
+                                    <a class="dropdown-item" href="#">Customize</a>
+                                </div>
+                            </li>*@
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link d-block" href="@Url.Action("Login", "Home")">
+                                <b>登入會員</b>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mt-5">
+            <div class="row tm-content-row">
+                <div class="tm-block-col tm-col-account-settings">
+                    <div class="tm-bg-primary-dark tm-block tm-block-settings">
+                        <h2 class="tm-block-title">會員資料</h2>
+                        <form action="" method="post" class="tm-signup-form row">
+                            <div class="form-group col-lg-6">
+                                <label for="age">年齡</label>
+                                <select id="age" class="custom-select" name="age" required>
+                                    <option value="">請選擇</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="gender">性別</label>
+                                <select id="gender" class="custom-select" name="Gender" required>
+                                    <option value="">請選擇</option>
+                                    <option value="male">男性</option>
+                                    <option value="female">女性</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="height">身高</label>
+                                <select id="height" class="custom-select" name="height" placeholder="cm" required>
+                                    <option value="">請選擇</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="weight">體重</label>
+                                <select id="weight" class="custom-select" name="weight" placeholder="kg" required>
+                                    <option value="">請選擇</option>
+                                </select>
+
+                            </div>
+                            <input id="Goalcal"
+                                   name="SuitableCaloriePerDay"
+                                   type="text"
+                                   style="display:none" />
+                            <div class="form-group col-lg-6">
+                                <label for="goal">目標</label>
+                                <select id="goal" class="custom-select" name="Goal" required>
+                                    <option value="">請選擇</option>
+                                    <option value="loss">減重</option>
+                                    <option value="stay">維持</option>
+                                    <option value="gain">增肥</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="activitylevel">運動強度</label>
+                                <select id="activitylevel" class="custom-select" name="ActivityCoefficient" required>
+                                    <option value="">請選擇</option>
+                                    <option value="l">沒在運動</option>
+                                    <option value="lm">每週運動1-3天</option>
+                                    <option value="m">每週運動4-5天</option>
+                                    <option value="mh">體力勞動者</option>
+                                    <option value="h">職業運動員</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <button type="button" click="Calculate()" id="btnCaculate"
+                                        class="btn btn-primary btn-block text-uppercase">
+                                    計算目標熱量
+                                </button>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <p id="lblResult" style="font-size: 120%; color: white;">你的基礎代謝率：</p>
+                                <p id="lblResult2" style="font-size: 120%; color: white;">每日總消耗熱量TDEE：</p>
+                                <p id="lblResult3" name="SuitableCaloriePerDay" value=goalresult style="font-size: 120%; color: white;">目標熱量：</p>
+
+                                <button type="submit"
+                                        class="btn btn-primary btn-block text-uppercase">
+                                    送出
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="~/js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+    <script>
+        var result;
+        var goalresult;
+        var MaintenanceCalories;
+        //
+
+        function Calculate() {
+
+            var gender = document.getElementById("gender").value;
+            var weight = parseFloat(document.getElementById("weight").value);
+            var height = parseFloat(document.getElementById("height").value);
+            var age = parseFloat(document.getElementById("age").value);
+            var activitylevel = document.getElementById("activitylevel").value;
+            var goal = document.getElementById("goal").value;
+            //var MaintenanceCalories = 0;
+            if (gender == "male")
+            //English-BMR = 66 + ( 6.23 x weight in pounds ) + ( 12.7 x height in inches ) - ( 6.8 x age in year )
+            //Metric-BMR = 66 + ( 13.7 x weight in kilos ) + ( 5 x height in cm ) - ( 6.8 x age in years )
+            {
+                var val1 = 13.7 * weight;
+                var val2 = 5 * height;
+                var val3 = 6.8 * age;
+                result = 66 + val1 + val2 - val3;
+                var val4 = activitylevel;
+                var val5 = goal;
+            } else if (gender == "female")
+            //English-Women: BMR = 655 + ( 4.35 x weight in pounds ) + ( 4.7 x height in inches ) - ( 4.7 x age in years)
+            //Women: BMR = 655 + ( 9.6 x weight in kilos ) + ( 1.8 x height in cm ) - ( 4.7 x age in years )
+            {
+                var val1 = 9.6 * weight;
+                var val2 = 1.8 * height;
+                var val3 = 4.7 * age;
+                result = 655 + val1 + val2 - val3;
+                var val4 = activitylevel;
+                var val5 = goal;
+            }
+            switch (val4) {
+                case "l":
+                    MaintenanceCalories = result * 1.2;
+                    break;
+
+                case "lm":
+                    MaintenanceCalories = result * 1.375;
+                    break;
+
+                case "m":
+                    MaintenanceCalories = result * 1.55;
+                    break;
+
+                case "mh":
+                    MaintenanceCalories = result * 1.725;
+                    break;
+
+                case "h":
+                    MaintenanceCalories = result * 1.9;
+                    break;
+
+                default:
+                    "m";
+            }
+            switch (val5) {
+                case "loss":
+                    goalresult = MaintenanceCalories - 300;
+                    break;
+
+                case "stay":
+                    goalresult = MaintenanceCalories + 0;
+                    break;
+
+                case "gain":
+                    goalresult = MaintenanceCalories + 300;
+                    break;
+
+            }
+
+            //alert(goalresult);
+            var roundA = Math.round(goalresult);
+            $("#Goalcal").val(roundA);
+        }
+
+        //document.write ('Your BMR is: ' + result.toFixed(2) + '. Your Maintenance Calories are: ' + MaintenanceCalories.toFixed(2));
+        document.getElementById("btnCaculate").addEventListener("click", function () {
+
+            Calculate();
+            document.getElementById('lblResult').innerHTML = '你的基礎代謝率： ' + result.toFixed(2);
+            document.getElementById('lblResult2').innerHTML = '每日總消耗熱量TDEE： ' + MaintenanceCalories.toFixed(2);
+            document.getElementById('lblResult3').innerHTML = '目標熱量： ' + goalresult.toFixed(2);
+
+        })
+    </script>
+
+    <script>
+        $(function () {
+            var $select = $("#age");
+            for (i = 1; i <= 100; i++) {
+                $select.append($('<option></option>').val(i).html(i))
+            }
+
+            var $select = $("#height");
+            for (i = 100; i <= 250; i++) {
+                $select.append($('<option></option>').val(i).html(i))
+            }
+
+            var $select = $("#weight");
+            for (i = 0; i <= 200; i++) {
+                $select.append($('<option></option>').val(i).html(i))
+            }
+
+        });
+    </script>
+</body>
+</html>

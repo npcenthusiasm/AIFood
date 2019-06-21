@@ -1,0 +1,546 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CalDBModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Calorie">
+          <Key>
+            <PropertyRef Name="FoodId" />
+          </Key>
+          <Property Name="FoodId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FoodCName" Type="varchar" MaxLength="10" />
+          <Property Name="FoodName" Type="varchar" MaxLength="40" />
+          <Property Name="Calorie" Type="real" />
+          <Property Name="Carbohydrate" Type="real" />
+          <Property Name="Fat" Type="real" />
+          <Property Name="Protein" Type="real" />
+        </EntityType>
+        <EntityType Name="CalorieList">
+          <Key>
+            <PropertyRef Name="CalorieID" />
+          </Key>
+          <Property Name="CalorieID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FoodClass" Type="varchar" MaxLength="20" />
+          <Property Name="FoodItem" Type="varchar" MaxLength="50" />
+          <Property Name="CaloriePer100g" Type="real" />
+        </EntityType>
+        <EntityType Name="CarbohydrateList">
+          <Key>
+            <PropertyRef Name="CarbohydrateID" />
+          </Key>
+          <Property Name="CarbohydrateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FoodClass" Type="varchar" MaxLength="20" />
+          <Property Name="FoodItem" Type="varchar" MaxLength="50" />
+          <Property Name="CarbohydratePer100g" Type="real" />
+        </EntityType>
+        <EntityType Name="GoodCar">
+          <Key>
+            <PropertyRef Name="GoodCarID" />
+          </Key>
+          <Property Name="GoodCarID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarFood" Type="varchar" MaxLength="20" />
+          <Property Name="CaloriePer100" Type="real" />
+          <Property Name="CarbohydratePer100" Type="real" />
+          <Property Name="FatPer100" Type="real" />
+          <Property Name="ProteinPer100" Type="real" />
+        </EntityType>
+        <EntityType Name="HighProtein">
+          <Key>
+            <PropertyRef Name="HProteinID" />
+          </Key>
+          <Property Name="HProteinID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HProFood" Type="varchar" MaxLength="20" />
+          <Property Name="CaloriePer100" Type="real" />
+          <Property Name="CarbohydratePer100" Type="real" />
+          <Property Name="FatPer100" Type="real" />
+          <Property Name="ProteinPer100" Type="real" />
+        </EntityType>
+        <EntityType Name="List">
+          <Key>
+            <PropertyRef Name="ListID" />
+          </Key>
+          <Property Name="ListID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Class" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FoodItem" Type="varchar" MaxLength="20" />
+          <Property Name="CaloriePer100" Type="real" />
+          <Property Name="CarbohydratePer100" Type="real" />
+          <Property Name="FatPer100" Type="real" />
+          <Property Name="ProteinPer100" Type="real" />
+        </EntityType>
+        <EntityType Name="Memberlist">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="10" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="6" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Height" Type="real" />
+          <Property Name="Weight" Type="real" />
+          <Property Name="ActivityCoefficient" Type="varchar" MaxLength="5" />
+          <Property Name="Email" Type="varchar" MaxLength="30" />
+          <Property Name="Password" Type="varchar" MaxLength="20" />
+          <Property Name="Startday" Type="varchar" MaxLength="10" />
+          <Property Name="SuitableCaloriePerDay" Type="int" />
+          <Property Name="Goal" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="PersonCal">
+          <Key>
+            <PropertyRef Name="PersonCalID" />
+          </Key>
+          <Property Name="PersonCalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="10" />
+          <Property Name="RecordDay" Type="varchar" MaxLength="10" />
+          <Property Name="FoodCName" Type="varchar" MaxLength="10" />
+          <Property Name="FoodName" Type="varchar" MaxLength="40" />
+          <Property Name="Quantity" Type="real" />
+          <Property Name="AdjCalorie" Type="real" />
+          <Property Name="AdjCarbohydrate" Type="real" />
+          <Property Name="AdjFat" Type="real" />
+          <Property Name="AdjProtein" Type="real" />
+          <Property Name="SuitableCaloriePerDay" Type="int" />
+          <Property Name="SignInDay" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Personrecord">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="10" />
+          <Property Name="Age" Type="real" />
+          <Property Name="Height" Type="real" />
+          <Property Name="Weight" Type="real" />
+          <Property Name="BMI" Type="real" />
+          <Property Name="BMR" Type="real" />
+          <Property Name="ActivityCoefficient" Type="varchar" MaxLength="5" />
+          <Property Name="SuitableCaloriePerDay" Type="int" />
+          <Property Name="Measureday" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="ProteinList">
+          <Key>
+            <PropertyRef Name="ProteinID" />
+          </Key>
+          <Property Name="ProteinID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FoodClass" Type="varchar" MaxLength="20" />
+          <Property Name="FoodItem" Type="varchar" MaxLength="50" />
+          <Property Name="ProteinPer100g" Type="real" />
+        </EntityType>
+        <EntityType Name="SportCoe">
+          <Key>
+            <PropertyRef Name="SportID" />
+          </Key>
+          <Property Name="SportID" Type="int" Nullable="false" />
+          <Property Name="SportItem" Type="varchar" MaxLength="20" />
+          <Property Name="Coefficient" Type="real" />
+        </EntityType>
+        <Association Name="FK_PersonCal_Memberlist">
+          <End Role="Memberlist" Type="Self.Memberlist" Multiplicity="1" />
+          <End Role="PersonCal" Type="Self.PersonCal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Memberlist">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="PersonCal">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Personrecord_Memberlist">
+          <End Role="Memberlist" Type="Self.Memberlist" Multiplicity="1" />
+          <End Role="Personrecord" Type="Self.Personrecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Memberlist">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Personrecord">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CalDBModel1StoreContainer">
+          <EntitySet Name="Calorie" EntityType="Self.Calorie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CalorieList" EntityType="Self.CalorieList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarbohydrateList" EntityType="Self.CarbohydrateList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoodCar" EntityType="Self.GoodCar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HighProtein" EntityType="Self.HighProtein" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="List" EntityType="Self.List" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Memberlist" EntityType="Self.Memberlist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonCal" EntityType="Self.PersonCal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personrecord" EntityType="Self.Personrecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProteinList" EntityType="Self.ProteinList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SportCoe" EntityType="Self.SportCoe" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PersonCal_Memberlist" Association="Self.FK_PersonCal_Memberlist">
+            <End Role="Memberlist" EntitySet="Memberlist" />
+            <End Role="PersonCal" EntitySet="PersonCal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Personrecord_Memberlist" Association="Self.FK_Personrecord_Memberlist">
+            <End Role="Memberlist" EntitySet="Memberlist" />
+            <End Role="Personrecord" EntitySet="Personrecord" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CalDBModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Calorie">
+          <Key>
+            <PropertyRef Name="FoodId" />
+          </Key>
+          <Property Name="FoodId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FoodCName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FoodName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Calorie1" Type="Single" />
+          <Property Name="Carbohydrate" Type="Single" />
+          <Property Name="Fat" Type="Single" />
+          <Property Name="Protein" Type="Single" />
+        </EntityType>
+        <EntityType Name="CalorieList">
+          <Key>
+            <PropertyRef Name="CalorieID" />
+          </Key>
+          <Property Name="CalorieID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FoodClass" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FoodItem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CaloriePer100g" Type="Single" />
+        </EntityType>
+        <EntityType Name="CarbohydrateList">
+          <Key>
+            <PropertyRef Name="CarbohydrateID" />
+          </Key>
+          <Property Name="CarbohydrateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FoodClass" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FoodItem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CarbohydratePer100g" Type="Single" />
+        </EntityType>
+        <EntityType Name="GoodCar">
+          <Key>
+            <PropertyRef Name="GoodCarID" />
+          </Key>
+          <Property Name="GoodCarID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarFood" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CaloriePer100" Type="Single" />
+          <Property Name="CarbohydratePer100" Type="Single" />
+          <Property Name="FatPer100" Type="Single" />
+          <Property Name="ProteinPer100" Type="Single" />
+        </EntityType>
+        <EntityType Name="HighProtein">
+          <Key>
+            <PropertyRef Name="HProteinID" />
+          </Key>
+          <Property Name="HProteinID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HProFood" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CaloriePer100" Type="Single" />
+          <Property Name="CarbohydratePer100" Type="Single" />
+          <Property Name="FatPer100" Type="Single" />
+          <Property Name="ProteinPer100" Type="Single" />
+        </EntityType>
+        <EntityType Name="List">
+          <Key>
+            <PropertyRef Name="ListID" />
+          </Key>
+          <Property Name="ListID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Class" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FoodItem" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CaloriePer100" Type="Single" />
+          <Property Name="CarbohydratePer100" Type="Single" />
+          <Property Name="FatPer100" Type="Single" />
+          <Property Name="ProteinPer100" Type="Single" />
+        </EntityType>
+        <EntityType Name="Memberlist">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Height" Type="Single" />
+          <Property Name="Weight" Type="Single" />
+          <Property Name="ActivityCoefficient" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Startday" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SuitableCaloriePerDay" Type="Int32" />
+          <Property Name="Goal" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PersonCals" Relationship="Self.FK_PersonCal_Memberlist" FromRole="Memberlist" ToRole="PersonCal" />
+          <NavigationProperty Name="Personrecords" Relationship="Self.FK_Personrecord_Memberlist" FromRole="Memberlist" ToRole="Personrecord" />
+        </EntityType>
+        <EntityType Name="PersonCal">
+          <Key>
+            <PropertyRef Name="PersonCalID" />
+          </Key>
+          <Property Name="PersonCalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="RecordDay" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FoodCName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FoodName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Single" />
+          <Property Name="AdjCalorie" Type="Single" />
+          <Property Name="AdjCarbohydrate" Type="Single" />
+          <Property Name="AdjFat" Type="Single" />
+          <Property Name="AdjProtein" Type="Single" />
+          <Property Name="SuitableCaloriePerDay" Type="Int32" />
+          <Property Name="SignInDay" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Memberlist" Relationship="Self.FK_PersonCal_Memberlist" FromRole="PersonCal" ToRole="Memberlist" />
+        </EntityType>
+        <EntityType Name="Personrecord">
+          <Key>
+            <PropertyRef Name="RecordID" />
+          </Key>
+          <Property Name="RecordID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Age" Type="Single" />
+          <Property Name="Height" Type="Single" />
+          <Property Name="Weight" Type="Single" />
+          <Property Name="BMI" Type="Single" />
+          <Property Name="BMR" Type="Single" />
+          <Property Name="ActivityCoefficient" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="SuitableCaloriePerDay" Type="Int32" />
+          <Property Name="Measureday" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Memberlist" Relationship="Self.FK_Personrecord_Memberlist" FromRole="Personrecord" ToRole="Memberlist" />
+        </EntityType>
+        <EntityType Name="ProteinList">
+          <Key>
+            <PropertyRef Name="ProteinID" />
+          </Key>
+          <Property Name="ProteinID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FoodClass" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="FoodItem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProteinPer100g" Type="Single" />
+        </EntityType>
+        <EntityType Name="SportCoe">
+          <Key>
+            <PropertyRef Name="SportID" />
+          </Key>
+          <Property Name="SportID" Type="Int32" Nullable="false" />
+          <Property Name="SportItem" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Coefficient" Type="Single" />
+        </EntityType>
+        <Association Name="FK_PersonCal_Memberlist">
+          <End Role="Memberlist" Type="Self.Memberlist" Multiplicity="1" />
+          <End Role="PersonCal" Type="Self.PersonCal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Memberlist">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="PersonCal">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Personrecord_Memberlist">
+          <End Role="Memberlist" Type="Self.Memberlist" Multiplicity="1" />
+          <End Role="Personrecord" Type="Self.Personrecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Memberlist">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Personrecord">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CalDBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Calories" EntityType="Self.Calorie" />
+          <EntitySet Name="CalorieLists" EntityType="Self.CalorieList" />
+          <EntitySet Name="CarbohydrateLists" EntityType="Self.CarbohydrateList" />
+          <EntitySet Name="GoodCars" EntityType="Self.GoodCar" />
+          <EntitySet Name="HighProteins" EntityType="Self.HighProtein" />
+          <EntitySet Name="Lists" EntityType="Self.List" />
+          <EntitySet Name="Memberlists" EntityType="Self.Memberlist" />
+          <EntitySet Name="PersonCals" EntityType="Self.PersonCal" />
+          <EntitySet Name="Personrecords" EntityType="Self.Personrecord" />
+          <EntitySet Name="ProteinLists" EntityType="Self.ProteinList" />
+          <EntitySet Name="SportCoes" EntityType="Self.SportCoe" />
+          <AssociationSet Name="FK_PersonCal_Memberlist" Association="Self.FK_PersonCal_Memberlist">
+            <End Role="Memberlist" EntitySet="Memberlists" />
+            <End Role="PersonCal" EntitySet="PersonCals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Personrecord_Memberlist" Association="Self.FK_Personrecord_Memberlist">
+            <End Role="Memberlist" EntitySet="Memberlists" />
+            <End Role="Personrecord" EntitySet="Personrecords" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CalDBModel1StoreContainer" CdmEntityContainer="CalDBEntities1">
+          <EntitySetMapping Name="Calories">
+            <EntityTypeMapping TypeName="CalDBModel1.Calorie">
+              <MappingFragment StoreEntitySet="Calorie">
+                <ScalarProperty Name="FoodId" ColumnName="FoodId" />
+                <ScalarProperty Name="FoodCName" ColumnName="FoodCName" />
+                <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+                <ScalarProperty Name="Calorie1" ColumnName="Calorie" />
+                <ScalarProperty Name="Carbohydrate" ColumnName="Carbohydrate" />
+                <ScalarProperty Name="Fat" ColumnName="Fat" />
+                <ScalarProperty Name="Protein" ColumnName="Protein" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CalorieLists">
+            <EntityTypeMapping TypeName="CalDBModel1.CalorieList">
+              <MappingFragment StoreEntitySet="CalorieList">
+                <ScalarProperty Name="CalorieID" ColumnName="CalorieID" />
+                <ScalarProperty Name="FoodClass" ColumnName="FoodClass" />
+                <ScalarProperty Name="FoodItem" ColumnName="FoodItem" />
+                <ScalarProperty Name="CaloriePer100g" ColumnName="CaloriePer100g" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarbohydrateLists">
+            <EntityTypeMapping TypeName="CalDBModel1.CarbohydrateList">
+              <MappingFragment StoreEntitySet="CarbohydrateList">
+                <ScalarProperty Name="CarbohydrateID" ColumnName="CarbohydrateID" />
+                <ScalarProperty Name="FoodClass" ColumnName="FoodClass" />
+                <ScalarProperty Name="FoodItem" ColumnName="FoodItem" />
+                <ScalarProperty Name="CarbohydratePer100g" ColumnName="CarbohydratePer100g" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodCars">
+            <EntityTypeMapping TypeName="CalDBModel1.GoodCar">
+              <MappingFragment StoreEntitySet="GoodCar">
+                <ScalarProperty Name="GoodCarID" ColumnName="GoodCarID" />
+                <ScalarProperty Name="CarFood" ColumnName="CarFood" />
+                <ScalarProperty Name="CaloriePer100" ColumnName="CaloriePer100" />
+                <ScalarProperty Name="CarbohydratePer100" ColumnName="CarbohydratePer100" />
+                <ScalarProperty Name="FatPer100" ColumnName="FatPer100" />
+                <ScalarProperty Name="ProteinPer100" ColumnName="ProteinPer100" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HighProteins">
+            <EntityTypeMapping TypeName="CalDBModel1.HighProtein">
+              <MappingFragment StoreEntitySet="HighProtein">
+                <ScalarProperty Name="HProteinID" ColumnName="HProteinID" />
+                <ScalarProperty Name="HProFood" ColumnName="HProFood" />
+                <ScalarProperty Name="CaloriePer100" ColumnName="CaloriePer100" />
+                <ScalarProperty Name="CarbohydratePer100" ColumnName="CarbohydratePer100" />
+                <ScalarProperty Name="FatPer100" ColumnName="FatPer100" />
+                <ScalarProperty Name="ProteinPer100" ColumnName="ProteinPer100" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lists">
+            <EntityTypeMapping TypeName="CalDBModel1.List">
+              <MappingFragment StoreEntitySet="List">
+                <ScalarProperty Name="ListID" ColumnName="ListID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="FoodItem" ColumnName="FoodItem" />
+                <ScalarProperty Name="CaloriePer100" ColumnName="CaloriePer100" />
+                <ScalarProperty Name="CarbohydratePer100" ColumnName="CarbohydratePer100" />
+                <ScalarProperty Name="FatPer100" ColumnName="FatPer100" />
+                <ScalarProperty Name="ProteinPer100" ColumnName="ProteinPer100" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Memberlists">
+            <EntityTypeMapping TypeName="CalDBModel1.Memberlist">
+              <MappingFragment StoreEntitySet="Memberlist">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="ActivityCoefficient" ColumnName="ActivityCoefficient" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Startday" ColumnName="Startday" />
+                <ScalarProperty Name="SuitableCaloriePerDay" ColumnName="SuitableCaloriePerDay" />
+                <ScalarProperty Name="Goal" ColumnName="Goal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonCals">
+            <EntityTypeMapping TypeName="CalDBModel1.PersonCal">
+              <MappingFragment StoreEntitySet="PersonCal">
+                <ScalarProperty Name="PersonCalID" ColumnName="PersonCalID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="RecordDay" ColumnName="RecordDay" />
+                <ScalarProperty Name="FoodCName" ColumnName="FoodCName" />
+                <ScalarProperty Name="FoodName" ColumnName="FoodName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="AdjCalorie" ColumnName="AdjCalorie" />
+                <ScalarProperty Name="AdjCarbohydrate" ColumnName="AdjCarbohydrate" />
+                <ScalarProperty Name="AdjFat" ColumnName="AdjFat" />
+                <ScalarProperty Name="AdjProtein" ColumnName="AdjProtein" />
+                <ScalarProperty Name="SuitableCaloriePerDay" ColumnName="SuitableCaloriePerDay" />
+                <ScalarProperty Name="SignInDay" ColumnName="SignInDay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personrecords">
+            <EntityTypeMapping TypeName="CalDBModel1.Personrecord">
+              <MappingFragment StoreEntitySet="Personrecord">
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="BMI" ColumnName="BMI" />
+                <ScalarProperty Name="BMR" ColumnName="BMR" />
+                <ScalarProperty Name="ActivityCoefficient" ColumnName="ActivityCoefficient" />
+                <ScalarProperty Name="SuitableCaloriePerDay" ColumnName="SuitableCaloriePerDay" />
+                <ScalarProperty Name="Measureday" ColumnName="Measureday" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProteinLists">
+            <EntityTypeMapping TypeName="CalDBModel1.ProteinList">
+              <MappingFragment StoreEntitySet="ProteinList">
+                <ScalarProperty Name="ProteinID" ColumnName="ProteinID" />
+                <ScalarProperty Name="FoodClass" ColumnName="FoodClass" />
+                <ScalarProperty Name="FoodItem" ColumnName="FoodItem" />
+                <ScalarProperty Name="ProteinPer100g" ColumnName="ProteinPer100g" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SportCoes">
+            <EntityTypeMapping TypeName="CalDBModel1.SportCoe">
+              <MappingFragment StoreEntitySet="SportCoe">
+                <ScalarProperty Name="SportID" ColumnName="SportID" />
+                <ScalarProperty Name="SportItem" ColumnName="SportItem" />
+                <ScalarProperty Name="Coefficient" ColumnName="Coefficient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

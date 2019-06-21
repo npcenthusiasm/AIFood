@@ -1,0 +1,250 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>H5多图压缩上传与预览</title>
+    <style type="text/css">
+
+        .container {
+            margin: 30px auto;
+            max-width: 1100px;
+        }
+
+        .btn {
+            position: relative;
+            display: inline-block;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            text-align: center;
+            vertical-align: middle;
+            font-weight: 400;
+            color: #fff;
+            background-color: #627aad;
+            border: 1px solid #627aad;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background-color: #de815c;
+            border-color: #de815c;
+        }
+
+        .btn-info {
+            background-color: #5cafde;
+            border-color: #5cafde
+        }
+
+        .file-input {
+            position: absolute;
+            left: -99999px
+        }
+
+        .image-wrap {
+            overflow: hidden;
+            min-height: 120px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .image-preview {
+            float: left;
+            width: 120px;
+            height: 120px;
+            margin-right: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+            .image-preview img {
+                height: 100%;
+                width: 100%;
+            }
+
+        .big-image {
+            margin-top: 15px;
+        }
+    </style>
+    <script src="./js/jquery-3.3.1.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <label class="btn" for="fileInput">
+            多图上传
+            <input id="fileInput" class="file-input" type="file" multiple="multiple" accept="image/jpeg,image/jpg,image/png">
+        </label>
+        <span class="btn btn-danger" id="delImage">删除</span>
+        <div id="imageWrap" class="image-wrap">
+        </div>
+        <span class="btn btn-info" id="submitImage">上传</span>
+        <div class="big-image">
+            <img src="" alt="" id="bigImage">
+        </div>
+    </div>
+    <script>
+        // 兼容IE10+
+        (function imgUp() {
+            var fileInput = document.getElementById('fileInput'),
+                imageWrap = document.getElementById('imageWrap'),
+                delImage = document.getElementById('delImage'),
+                bigImage = document.getElementById('bigImage'),
+                submitImage = document.getElementById('submitImage'),
+                photoCompress, submitPicture;
+            // 对图片进行压缩
+            photoCompress = function (fileObjAll, wrap, index) {
+
+                var ready = new FileReader(),
+                    fileObj = fileObjAll[index],
+                    size = fileObj.size / 1024;
+                quality = 1; // quality值越小，所绘制出的图像越模糊
+                // 512是512KB，大于512对图片进行压缩，可根据实际情况修改大小(压缩并不精确，大概是这个范围)
+                quality = size > 512 ? quality = 512 / size : quality; //进行压缩上传
+
+                /*开始读取指定的Blob对象或File对象中的内容. 当读取操作完成时,readyState属性的值会成为DONE,
+                如果设置了onloadend事件处理程序,则调用之.同时,result属性中将包含一个data: URL格式的字符串以表示所读取文件的内容.*/
+                ready.readAsDataURL(fileObj);
+                ready.onload = function () {
+                    var img = new Image();
+                    img.src = this.result;
+                    img.onload = function () {
+                        var that = this,
+                            // 默认按比例压缩
+                            w = that.width,
+                            h = that.height;
+                        //生成canvas
+                        var canvas = document.createElement('canvas'),
+                            ctx = canvas.getContext('2d');
+
+                        canvas.setAttribute('width', w);
+                        canvas.setAttribute('height', h);
+                        ctx.drawImage(that, 0, 0, w, h);
+
+                        var base64 = canvas.toDataURL(fileObj.type, quality),
+                            div = document.createElement('div'),
+                            img = document.createElement('img');
+                        div.classList.add('image-preview');
+                        img.setAttribute('src', base64);
+                        img.setAttribute('data-name', fileObj.name);
+                        div.appendChild(img);
+                        wrap.appendChild(div);
+
+                        index++;
+                        if (fileObjAll.length > index) {
+                            // 一个接着一个显示的效果
+                            setTimeout(function () {
+                                photoCompress(fileObjAll, wrap, index);
+                            }, 100);
+                        }
+                    };
+                };
+            };
+            // 上传图片
+            submitPicture = function () {
+                var formData = new FormData(),
+                    convertBase64UrlToBlob;
+                console.log(formData);
+                convertBase64UrlToBlob = function (urlData) {
+                    var arr = urlData.split(','),
+                        mime = arr[0].match(/:(.*?);/)[1],
+                        bstr = atob(arr[1]),
+                        n = bstr.length,
+                        u8arr = new Uint8Array(n);
+                    while (n--) {
+                        u8arr[n] = bstr.charCodeAt(n);
+                    }
+                    return new Blob([u8arr], { type: mime });
+                };
+                Array.prototype.slice.call(imageWrap.getElementsByTagName('img'))
+                    .forEach(function (v, i) {
+                        var imgBlob = convertBase64UrlToBlob(v.getAttribute('src'))
+                        console.log(imgBlob);
+                        formData.append(v.getAttribute('data-name'), imgBlob);
+                    })
+
+                var xhr = new XMLHttpRequest();
+                console.log(formData);
+                // url更换为真实地址
+                //xhr.open('POST', 'url', true);
+
+                //xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //xhr.onreadystatechange = function () {
+                //    if (xhr.readyState === 4 && xhr.status === 200) {
+                //        console.log(JSON.parse(xhr.responseText));
+                //    } else {
+                //        console.log(xhr.statusText);
+                //    }
+                //}
+                //xhr.send(formData);
+
+                /*ajax发送
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'url',
+                    data: formData,
+                    cache: false,
+                    processData: false, // 不处理数据
+                    contentType: false, // 不设置内容类型
+                    success: function(msg) {
+                        console.log(msg)
+                    }
+                });
+                */
+                var uriBase = "https://southeastasia.api.cognitive.microsoft.com/customvision/v3.0/Prediction/e817045b-56a3-45ee-ab88-b9c43d15943e/classify/iterations/Iteration90610/image";
+                var PredictionKey = "49f541141b484823bec1b51adf5e16df";
+
+                $.ajax({
+                    url: uriBase,
+                    beforeSend: function (xhrObj) {
+                        // Request headers
+                        xhrObj.setRequestHeader("Content-Type", "multipart/form-data");
+                        xhrObj.setRequestHeader("Prediction-key", PredictionKey);
+                    },
+                    type: "POST",
+                    // Request body
+                    data: formData,
+                })
+                    .done(function (data) {
+                        alert("success");
+                    })
+                    .fail(function () {
+                        alert("error");
+                    });
+
+            };
+
+            // 预览图片
+            fileInput.addEventListener('change', function (e) {
+                photoCompress(this.files, imageWrap, 0);
+            }, false)
+
+            // 删除图片
+            delImage.addEventListener('click', function (e) {
+                fileInput.value = '';
+                imageWrap.innerHTML = '';
+            }, false)
+
+            // 预览大图
+            imageWrap.addEventListener('click', function (e) {
+                var e = e.target,
+                    tagName = e.tagName.toLowerCase();
+                if (tagName === 'div') return;
+                while (tagName !== 'img') {
+                    e = e.parentNode;
+                }
+                bigImage.setAttribute('src', e.getAttribute('src'))
+            }, false)
+
+            // 上传图片
+            submitImage.addEventListener('click', function (e) {
+                submitPicture();
+            }, false)
+        }())
+    </script>
+</body>
+</html>
