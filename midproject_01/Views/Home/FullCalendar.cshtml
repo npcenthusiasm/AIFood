@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "FullCalendar";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+
+    <!-- Moment.js v2.20.0 -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.0/moment.min.js"></script>
+    <!-- FullCalendar v3.8.1 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.1/fullcalendar.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.1/fullcalendar.print.css" rel="stylesheet" media="print"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.1/fullcalendar.min.js"></script>
+
+    <div id="example"></div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="modaltext">123123</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Launch demo modal
+    </button>*@
+    <script>
+        $(document).ready(function () {
+            var events = [];
+            $.ajax({
+                type: "GET",
+                url: "/Home/FullCalendarData",
+                success: function (data) {
+                    $.each(data, function (key, obj) {
+                        var yyyy = (obj.RecordDay.substr(0, 4))
+                        var mm = (obj.RecordDay.substr(4, 2))
+                        var dd = (obj.RecordDay.substr(6, 2))
+                        var time = yyyy + "-" + mm + "-" + dd;
+
+
+                        events.push({
+                            title: obj.FoodCName,
+                            start: time,
+                            color: "#ffc107"
+                        });
+                    });
+                    GeneraCalender(events);
+                },
+                error: function (error) {
+                    alert("failed");
+                }
+            });
+        });
+
+        function GeneraCalender(events) {
+            $("#example").fullCalendar({
+                // 參數設定[註1]
+                header: { // 頂部排版
+                    left: "prev,next today", // 左邊放置上一頁、下一頁和今天
+                    center: "title", // 中間放置標題
+                    right: "month,basicWeek,basicDay" // 右邊放置月、周、天
+                },
+                defaultDate: "2019-06-21", // 起始日期
+                weekends: true, // 顯示星期六跟星期日
+                editable: true,  // 啟動拖曳調整日期
+                events: events,
+                //     [ // 事件
+                //    { // 事件
+                //        title: "熱量:1800",
+                //        start: "2018-02-01"
+                //    },
+                //    { // 事件(包含開始時間)
+                //        title: "中餐",
+                //        start: "2018-02-12T12:00:00"
+                //    },
+                //    { // 事件(包含跨日開始時間、結束時間)
+                //        title: "音樂節",
+                //        start: "2018-02-07",
+                //        end: "2018-02-10"
+                //    },
+                //    { // 事件(包含開始時間、結束時間)
+                //        title: "會議",
+                //        start: "2018-02-12T10:30:00",
+                //        end: "2018-02-12T12:30:00"
+                //    },
+                //    { // 事件(設定連結)
+                //        title: "Click for Google",
+                //        url: "http://google.com/",
+                //        start: "2018-02-28"
+                //    }
+                //]
+                eventClick: function (calEvent, jsEvent, view) {
+                    $("#exampleModalLabel").text(calEvent.start.format("YYYY-MM-DD"));
+                    $("#modaltext").text(calEvent.title);
+                    //alert(calEvent.title);
+                    //var $discription = $('<div/>');
+                    //$discription.append($('<p/>').html('<b>Start:</b>' + calEvent.start.format("DD-MM-YYYY")));
+                    
+                    $("#exampleModal").modal('show');
+                }
+            });
+        }
+
+    </script>

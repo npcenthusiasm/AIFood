@@ -98,6 +98,7 @@
   <ItemGroup>
     <Content Include="123123.html" />
     <Content Include="animation.html" />
+    <Content Include="anime0622.html" />
     <Content Include="backstage\accounts.html" />
     <Content Include="backstage\add-product.html" />
     <Content Include="canvas.html" />
@@ -113,6 +114,7 @@
     <Content Include="FIXTOP.html" />
     <Content Include="fog.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Fullcan.html" />
     <Content Include="img\1.jpg" />
     <Content Include="img\2.jpg" />
     <Content Include="img\3.jpg" />
@@ -164,6 +166,7 @@
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\Chart.min.js" />
     <Content Include="js\jquery-3.3.1.min.js" />
+    <Content Include="js\jquery.dateFormat.js" />
     <Content Include="js\lrz.all.bundle.js" />
     <Content Include="js\moment.min.js" />
     <Content Include="js\tooplate-scripts.js" />
@@ -226,6 +229,7 @@
     <Content Include="Models\AzureCal0617.edmx.diagram">
       <DependentUpon>AzureCal0617.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\0621yuan - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\iFood0611 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\yuan0615Azure - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -365,6 +369,7 @@
     <Content Include="Views\Home\AccountsInfo.cshtml" />
     <Content Include="Views\Home\WaitPage.cshtml" />
     <Content Include="Views\Home\Introduction.cshtml" />
+    <Content Include="Views\Home\FullCalendar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

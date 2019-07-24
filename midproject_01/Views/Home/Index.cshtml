@@ -7,68 +7,107 @@
     Layout = "~/Views/_LayoutPage1.cshtml";
 }
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- 導覽列移到Layout -->
 
+<script>
+    $(function () {
+        $("#datepicker").datepicker();
+        $("#datepicker").change(function () {
+            $(this.form).submit();
+            @*$.ajax({
+                type: "POST",
+                url: "@Url.Action("Index", "Home")",
+                data: $("#datepicker").serialize()
+            });*@
+        });
+    });
+</script>
+
 <div class="" id="home">
     <div class="container">
-        <div class="row tm-content-row">
-            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
 
-                <h2 class="tm-block-title">卡路里餘額</h2>
-                <div class="container">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>每日標準</th>
-                                <th>攝取熱量</th>
-                                <th>熱量餘額</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>@Request.Cookies["SuitableCaloriePerDay"].Value.ToString()</td>
-                                <td id="dailyCal"></td>
-                                <td id="minusCal"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <h2 class="tm-block-title">卡路里餘額</h2>
+            <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>每日標準</th>
+                            <th>攝取熱量</th>
+                            <th>熱量餘額</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Request.Cookies["SuitableCaloriePerDay"].Value.ToString()</td>
+                            <td id="dailyCal"></td>
+                            <td id="minusCal"></td>
+                        </tr>
+                    </tbody>
+                </table>
 
             </div>
-            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                <div class="tm-bg-primary-dark tm-block  tm-block-taller">
-                    <h2 class="tm-block-title">本日攝取紀錄</h2>
-                    <canvas id="lineChart"></canvas>
-                </div>
-            </div>
-            <!--                 <canvas id="barChart"></canvas>-->
-            <div class="col-12 tm-block-col">
-                <div class="tm-bg-primary-dark tm-block tm-block-taller">
-                    <h2 class="tm-block-title">營養攝取比例</h2>
-                    <div id="pieChartContainer">
-                        <canvas id="pieChart" class="chartjs-render-monitor"></canvas>
+
+        </div>
+        <form class="form-horizontal" action="/Home/Index" method="post">
+            <fieldset>
+                @*<h2 class="tm-block-title" id="dayRecord">查看紀錄</h2>*@
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="datepicker">選擇日期</label>
+                    <div class="col-md-6">
+                        <input id="datepicker" name="date"  class="form-control input-md" value="@ViewBag.date"  readonly style="background-color:#415a70; color:#ffc107" >
                     </div>
                 </div>
+
+                <!-- Button -->
+                @*<div class="form-group">
+                    <label class="col-md-4 control-label" for="add"></label>
+                    <div class="col-md-4">
+                        <button id="add" class="btn btn-primary" type="submit">新增</button>
+                    </div>
+                </div>*@
+
+            </fieldset>
+        </form>
+
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+            <div class="tm-bg-primary-dark tm-block  tm-block-taller">
+                <h2 class="tm-block-title">本日攝取紀錄</h2>
+                <canvas id="lineChart"></canvas>
             </div>
-            <div class="col-12 tm-block-col">
-                <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
-                    <h2 class="tm-block-title" id="dayRecord">紀錄清單</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">日期</th>
-                                <th scope="col">食品</th>
-                                <th scope="col">碳水</th>
-                                <th scope="col">蛋白質</th>
-                                <th scope="col">脂肪</th>
-                                <th scope="col">卡路里</th>
-                                <th scope="col">刪除</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var i in Model)
-                            {
+        </div>
+        <!--                 <canvas id="barChart"></canvas>-->
+        <div class="col-12 tm-block-col">
+            <div class="tm-bg-primary-dark tm-block tm-block-taller">
+                <h2 class="tm-block-title">營養攝取比例</h2>
+                <div id="pieChartContainer">
+                    <canvas id="pieChart" class="chartjs-render-monitor"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 tm-block-col">
+            <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                <h2 class="tm-block-title" id="dayRecord">紀錄清單</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">日期</th>
+                            <th scope="col">食品</th>
+                            <th scope="col">碳水</th>
+                            <th scope="col">蛋白質</th>
+                            <th scope="col">脂肪</th>
+                            <th scope="col">卡路里</th>
+                            <th scope="col">刪除</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model)
+                        {
                             <tr>
                                 <th scope="row"><b>@i.RecordDay.Substring(4, 2)/@i.RecordDay.Substring(6, 2)</b></th>
                                 <td class="foodName">@i.FoodCName</td>
@@ -82,13 +121,13 @@
                                     </a>
                                 </td>
                             </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 

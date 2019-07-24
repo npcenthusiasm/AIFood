@@ -11,8 +11,8 @@ namespace midproject_01.Controllers
 {
     public class HomeController : Controller
     {
-        CalDBEntities db = new CalDBEntities(); // 本地資料庫
-       //CalDBEntities1 db = new CalDBEntities1(); //Azure
+        //CalDBEntities db = new CalDBEntities(); // 本地資料庫
+       CalDBEntities1 db = new CalDBEntities1(); //Azure
         //CalDBEntities2 db = new CalDBEntities2(); //AzureCal0617 僑宏雲端
         // GET: Home
         //首頁
@@ -42,123 +42,30 @@ namespace midproject_01.Controllers
                         where o.MemberID.ToString() == CookiesID.Value.ToString()
                         where o.RecordDay == Today
                         select o;
-
-            //var query2 = from o in db.PersonCals
-            //             where o.MemberID.ToString() == CookiesID.Value.ToString()
-            //             select o;
-
             return View(query.ToList());
-            //if (query.FirstOrDefault() != null)
-            //{
-            //    return View(query.ToList());
-            //}
-            //else { return View(query2.ToList()); }
-
         }
-
+        [HttpPost]
+        public ActionResult Index(string date)
+        {
+            // 06/20/2019
+            ViewBag.date = date;
+            DateTime dateA = Convert.ToDateTime(date);
+            var dateFormat = dateA.ToString("yyyyMMdd");
+            var query = from o in db.PersonCals
+                        where o.RecordDay == dateFormat
+                        select o;
+            
+            return View(query.ToList());
+        }
         //登入 在下方
 
-        //註冊
+        //註冊Step1
         public ActionResult Accounts()
         {
             Memberlist NewMember = new Memberlist();
             return View(NewMember);
         }
 
-        //註冊_新增目標
-        public ActionResult AccountsGoalAdd()
-        {
-            Memberlist NewMember = new Memberlist();
-            return View(NewMember);
-        }
-
-        //每日紀錄
-        public ActionResult UploadImgVer2()
-        {
-            var CookiesID = Request.Cookies["MemberID"];
-
-            if (CookiesID == null)
-            {
-                return Redirect("~/Home/Login");
-            }
-            else
-            {
-                PersonCal p = new PersonCal();
-                return View();
-            }
-
-        }
-
-        //進展
-        public ActionResult progress(PersonCal p)
-        {
-            var CookiesID = Request.Cookies["MemberID"];
-
-            if (CookiesID == null)
-            {
-                return Redirect("~/Home/Login");
-            }
-
-            var query = from o in db.Personrecords
-                        where o.MemberID.ToString() == CookiesID.Value
-                        select o;
-
-            return View(query.ToList());
-        }
-
-        //會員中心
-        public ActionResult MemberInfo()
-        {
-            var CookiesID = Request.Cookies["MemberID"];
-
-            if (CookiesID == null)
-            {
-                return Redirect("~/Home/Login");
-            }
-            var CookiesIDint = Convert.ToInt32(CookiesID.Value);
-            var query = from o in db.Memberlists
-                        where o.MemberID == CookiesIDint
-                        select o;
-
-            return View(query.FirstOrDefault());
-
-        }
-
-        //會員目標設定
-        public ActionResult Setting()
-        {
-            var CookiesID = Request.Cookies["MemberID"];
-
-            if (CookiesID == null)
-            {
-                return Redirect("~/Home/Login");
-            }
-
-            return View();
-        }
-
-        //帳號設定
-        public ActionResult AccountsInfo()
-        {
-            var CookiesID = Request.Cookies["MemberID"];
-
-            if (CookiesID == null)
-            {
-                return Redirect("~/Home/Login");
-            }
-            var CookiesIDint = Convert.ToInt32(CookiesID.Value);
-            var query = from o in db.Memberlists
-                        where o.MemberID == CookiesIDint
-                        select o;
-
-            return View(query.FirstOrDefault());
-        }
-
-
-
-
-
-        //Post:Home/Register
         [HttpPost]
         public ActionResult Accounts(string Email, string UserName, string Password)
         {
@@ -194,6 +101,13 @@ namespace midproject_01.Controllers
             return View();
         }
 
+        //註冊Step2 新增目標
+        public ActionResult AccountsGoalAdd()
+        {
+            Memberlist NewMember = new Memberlist();
+            return View(NewMember);
+        }
+
         [HttpPost]
         public ActionResult AccountsGoalAdd(Memberlist NewMember)
         {
@@ -224,6 +138,22 @@ namespace midproject_01.Controllers
             return RedirectToAction("Index");
         }
 
+        //每日紀錄
+        public ActionResult UploadImgVer2()
+        {
+            var CookiesID = Request.Cookies["MemberID"];
+
+            if (CookiesID == null)
+            {
+                return Redirect("~/Home/Login");
+            }
+            else
+            {
+                PersonCal p = new PersonCal();
+                return View();
+            }
+
+        }
 
         [HttpPost]
         public ActionResult UploadImgVer2(PersonCal p)
@@ -245,26 +175,114 @@ namespace midproject_01.Controllers
             return RedirectToAction("Index");
 
         }
+   
+        //進展
+        public ActionResult progress(PersonCal p)
+        {
+            var CookiesID = Request.Cookies["MemberID"];
+
+            if (CookiesID == null)
+            {
+                return Redirect("~/Home/Login");
+            }
+
+            var query = from o in db.Personrecords
+                        where o.MemberID.ToString() == CookiesID.Value
+                        select o;
+
+            return View(query.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult progress(Personrecord p)
+        {
+            var CookieId = Request.Cookies["MemberID"];
+            Personrecord x = new Personrecord();
+            x.Weight = p.Weight;
+            x.Height = p.Height;
+            x.MemberID = Convert.ToInt32(CookieId.Value);
+            x.Measureday = dayTime.ToString("yyyyMMdd");
+            db.Personrecords.Add(x);
+            db.SaveChanges();
 
 
+            return RedirectToAction("progress");
+        }
+        //會員中心
+        public ActionResult MemberInfo()
+        {
+            var CookiesID = Request.Cookies["MemberID"];
+
+            if (CookiesID == null)
+            {
+                return Redirect("~/Home/Login");
+            }
+            var CookiesIDint = Convert.ToInt32(CookiesID.Value);
+            var query = from o in db.Memberlists
+                        where o.MemberID == CookiesIDint
+                        select o;
+
+            return View(query.FirstOrDefault());
+
+        }
+        [HttpPost]
+        public ActionResult MemberInfo(Memberlist member)
+        {
+            var CookiesID = Request.Cookies["MemberID"];
+
+            if (CookiesID == null)
+            {
+                return Redirect("~/Home/Login");
+            }
+            var CookiesIDint = Convert.ToInt32(CookiesID.Value);
+            var query = from o in db.Memberlists
+                        where o.MemberID == CookiesIDint
+                        select o;
+            Memberlist Sqlmember = query.FirstOrDefault();
+            Sqlmember.Age = member.Age;
+            Sqlmember.Gender = member.Gender;
+            Sqlmember.Height = member.Height;
+            Sqlmember.Weight = member.Weight;
+            Sqlmember.Goal = member.Goal;
+            Sqlmember.ActivityCoefficient = member.ActivityCoefficient;
+            db.SaveChanges();
+            return Redirect("~/Home/Setting");
+
+        }
+        //會員目標設定
+        public ActionResult Setting()
+        {
+            var CookiesID = Request.Cookies["MemberID"];
+
+            if (CookiesID == null)
+            {
+                return Redirect("~/Home/Login");
+            }
+
+            return View();
+        }
+
+        //帳號設定
+        public ActionResult AccountsInfo()
+        {
+            var CookiesID = Request.Cookies["MemberID"];
+
+            if (CookiesID == null)
+            {
+                return Redirect("~/Home/Login");
+            }
+            var CookiesIDint = Convert.ToInt32(CookiesID.Value);
+            var query = from o in db.Memberlists
+                        where o.MemberID == CookiesIDint
+                        select o;
+
+            return View(query.FirstOrDefault());
+        }
 
         //登入
         public ActionResult Login()
         {
             return View();
-        }
-
-
-        public ActionResult Logout()
-        {
-            if (Request.Cookies["MemberID"] != null)
-            {
-                var CookieID = new HttpCookie("MemberID");
-                CookieID.Expires = DateTime.Now.AddDays(-1);
-                Response.Cookies.Add(CookieID);
-            }
-            return Redirect("~/Home/Index");
-
         }
 
         [HttpPost]
@@ -311,6 +329,20 @@ namespace midproject_01.Controllers
 
         }
 
+        //登出
+        public ActionResult Logout()
+        {
+            if (Request.Cookies["MemberID"] != null)
+            {
+                var CookieID = new HttpCookie("MemberID");
+                CookieID.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(CookieID);
+            }
+            return Redirect("~/Home/Index");
+
+        }
+
+        //營養資訊查詢
         public ActionResult SuggestFoodList()
         {
             var query = from o in db.Lists
@@ -339,34 +371,25 @@ namespace midproject_01.Controllers
 
         }
 
-        [HttpPost]
-        public ActionResult progress(Personrecord p)
-        {
-            var CookieId = Request.Cookies["MemberID"];
-            Personrecord x = new Personrecord();
-            x.Weight = p.Weight;
-            x.Height = p.Height;
-            x.MemberID = Convert.ToInt32(CookieId.Value);
-            x.Measureday = dayTime.ToString("yyyyMMdd");
-            db.Personrecords.Add(x);
-            db.SaveChanges();
 
 
-            return RedirectToAction("progress");
-        }
-
+        //首頁的動畫 
         public ActionResult WaitPage()
         {
 
             return View();
 
         }
+
+        //介紹的說明
         public ActionResult Introduction()
         {
 
             return View();
 
         }
+
+        //刪除首頁的紀錄
         public ActionResult IndexDelete(int? id)
         {
             var query = from o in db.PersonCals
@@ -378,6 +401,7 @@ namespace midproject_01.Controllers
             return Redirect("/Home/Index");
         }
 
+        //刪除進度的紀錄
         public ActionResult ProgressDelete(int? id)
         {
             var query = from o in db.Personrecords
@@ -389,5 +413,29 @@ namespace midproject_01.Controllers
             return Redirect("/Home/progress");
         }
 
+        //日歷
+        public ActionResult FullCalendar()
+        {
+            return View();
+        }
+
+        //日歷的Json資料
+        public JsonResult FullCalendarData()
+        {
+            //要是用於創建代理（以及禁用延遲加載）禁用代理擾亂序列yiyang
+            db.Configuration.ProxyCreationEnabled = false;
+            var CookiesID = Request.Cookies["MemberID"];
+
+            //if (CookiesID == null)
+            //{
+            //    return Redirect("~/Home/Login");
+            //}
+            var CookiesIDint = Convert.ToInt32(CookiesID.Value);
+            var query = from o in db.PersonCals
+                        where o.MemberID == CookiesIDint
+                        select o;
+            var personCalList = query.ToList();
+            return new JsonResult { Data = personCalList,JsonRequestBehavior= JsonRequestBehavior.AllowGet };
+        }
     }
 }
